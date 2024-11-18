@@ -1,0 +1,51 @@
+# Ignore build folders and binary outputs
+build/
+bin/
+obj/
+*.o
+*.a
+*.so
+*.out
+*.exe
+
+# Temporary and backup files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+
+# Log files
+*.log
+
+# System or editor-specific configuration files
+.DS_Store
+Thumbs.db
+
+# Visual Studio Code specific files
+.vscode/
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+
+# CMake configuration files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+compile_commands.json
+
+# Raspberry Pi or hardware-specific outputs
+*.elf
+*.map
+
+# Optional folders (if using external libraries or dependencies)
+external/
+dependencies/
+node_modules/
+
+# Python files (if using support scripts)
+__pycache__/
+*.pyc
+*.pyo

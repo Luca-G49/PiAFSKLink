@@ -9,7 +9,9 @@
                 "-g",
                 "src/main.cpp",
                 "-o",
-                "build/main"
+                "build/main",
+                "-lasound",
+                "-lm"
             ],
             "group": "build"
         },

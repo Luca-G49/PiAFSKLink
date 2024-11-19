@@ -28,7 +28,4 @@ TODO
 
 ### 4. **Running the Software**
 
-To start the software, simply execute the program from the command line:
-
-```bash
-./PiAFSKLink
+TODO

@@ -18,10 +18,15 @@
         {
             "label": "Build and Run",
             "type": "shell",
-            "command": "export DISPLAY=192.168.1.222:0.0 && ./build/PiAFSKLink",
-            "dependsOn": "Build c++",
+            "command": "cd build && make && ./PiAFSKLink",
+            "group": {
+              "kind": "build",
+              "isDefault": true
+            },
             "problemMatcher": [],
-            "detail": "Execute after build"
-        }
+            "presentation": {
+              "reveal": "always"
+            }
+          }
     ]
 }

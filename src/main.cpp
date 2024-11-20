@@ -54,7 +54,10 @@ void receiver_thread() {
 
     // Listen for incoming signals
     while (running) {
-        ;
+
+        // Sleep for 5 seconds
+        std::this_thread::sleep_for(std::chrono::seconds(5));
+
     }
 }
 

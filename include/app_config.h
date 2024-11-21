@@ -14,6 +14,9 @@ struct AppConfig {
     int tone_duration = 100000;       // Duration of each tone in microseconds
     double tone_0 = 2200.0;           // Tone frequency for bit 0 in Hz
     double tone_1 = 3600.0;           // Tone frequency for bit 1 in Hz
+
+    // Reset default configuration
+    void resetToDefault();
 };
 
 // Return configuration

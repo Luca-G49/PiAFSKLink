@@ -27,10 +27,14 @@ void transmit_menu() {
             menuExit = true;
         }
         else {
-            // Convert message into bit string and transmit
-            transmit(stringToBits(message));
-            std::cout << "\n\033[1;32mMessage sent: \033[0m" << message << " -> " << stringToBits(message);
-            std::cout << std::endl << std::endl;
+
+            // Check that message is not empty
+            if(!message.empty()){
+                // Convert message into bit string and transmit
+                transmit(stringToBits(message));
+                std::cout << "\n\033[1;32mMessage sent: \033[0m" << message << " -> " << stringToBits(message);
+                std::cout << std::endl << std::endl;
+            }
         }
     }
 }

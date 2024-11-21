@@ -140,8 +140,8 @@ void setup_menu() {
             case 6: {
                 // View current setup
                 std::cout << "\033[1;32mSample rate: \033[0m" << config.sample_rate << "\033[1;32m Hz\033[0m" << std::endl;
-                std::cout << "\033[1;32mVolume: \033[0m" << config.volume << "\033[1;32m Hz\033[0m" << std::endl;
-                std::cout << "\033[1;32mTone duration: \033[0m" << config.tone_duration << "\033[1;32m Hz\033[0m" << std::endl;
+                std::cout << "\033[1;32mVolume: \033[0m" << config.volume << "\033[1;32m %\033[0m" << std::endl;
+                std::cout << "\033[1;32mTone duration: \033[0m" << config.tone_duration << "\033[1;32m us\033[0m" << std::endl;
                 std::cout << "\033[1;32mTone for bit0: \033[0m" << config.tone_0 << "\033[1;32m Hz\033[0m" << std::endl;
                 std::cout << "\033[1;32mTone for bit1: \033[0m" << config.tone_1 << "\033[1;32m Hz\033[0m" << std::endl;
 

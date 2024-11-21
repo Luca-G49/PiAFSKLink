@@ -11,9 +11,9 @@
 // Main menu
 void main_menu() {
 
-    bool menuExit = true;
+    bool menuExit = false;
 
-    while (menuExit) {
+    while (!menuExit) {
         clearTerminal();
         printTitle();
         printBorder("MAIN MENU");
@@ -48,10 +48,10 @@ void main_menu() {
                 setup_menu();
                 break;
             case 4:
-                menuExit = false;
+                menuExit = true;
                 return;
             default:
-                menuExit = false;
+                menuExit = true;
                 return;
         }
     }

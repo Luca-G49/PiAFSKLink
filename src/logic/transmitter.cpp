@@ -20,7 +20,9 @@ void generate_tone(double frequency, snd_pcm_t* handle, double volume, int durat
     }
 
     // Write samples to the audio device
-    int frames = NUM_SAMPLES / 2; // Two bytes per frame
+    //Stereo: 4 bytes per frame (2 sample, 1 sx + 1 dx))
+    //Mono: 2 bytes per frame (1 sample))
+    int frames = NUM_SAMPLES; // (Stereo => NUM_SAMPLES / 2)
     int res = snd_pcm_writei(handle, buffer, frames);
     if (res == -EPIPE) {
         std::cerr << "Buffer underrun occurred!" << std::endl;

@@ -95,17 +95,37 @@ To run the application:
 ## Project structure
 ```
 PiAFSKLink/
-├── build/                 # Build directory
-├── include/               # Header files for the project
-│   ├── audio_utils.h      # Audio device handling utilities header
-│   ├── constants.h        # Constants for project
-│   ├── receiver.h         # Receiver handling header
-│   └── transmitter.h      # Transmitter handling header
-├── src/                   # Source directory
-│   ├── audio_utils.cpp    # Audio device handling utilities
-│   ├── main.cpp           # Program entry point
-│   ├── receiver.cpp       # Receiver handling
-│   └── transmitter.cpp    # Transmitter handling
+├── build/                     # Build directory
+├── include/                   # Project header files
+│   ├── receiver.h             # Header for `receiver.cpp`
+│   └── transmitter.h          # Header for `transmitter.cpp`
+├── src/                       # Main source code
+│   ├── audio/                 # Audio device-related modules
+│   │   ├── audio_device.cpp   # Implementation of audio device handling
+│   │   └── audio_device.h     # Header for `audio_device.cpp`
+│   ├── config/                # Configuration-related modules
+│   │   ├── app_config.cpp     # Implementation of application configuration
+│   │   └── app_config.h       # Header for `app_config.cpp`
+│   ├── gui/                   # User interface modules
+│   │   ├── exit_menu.cpp      # Implementation of the exit menu
+│   │   ├── exit_menu.h        # Header for `exit_menu.cpp`
+│   │   ├── gui_utils.cpp      # Utility functions for GUI
+│   │   ├── gui_utils.h        # Header for `gui_utils.cpp`
+│   │   ├── main_menu.cpp      # Implementation of the main menu
+│   │   ├── main_menu.h        # Header for `main_menu.cpp`
+│   │   ├── receive_menu.cpp   # Implementation of the receive menu
+│   │   ├── receive_menu.h     # Header for `receive_menu.cpp`
+│   │   ├── setup_menu.cpp     # Implementation of the setup menu
+│   │   ├── setup_menu.h       # Header for `setup_menu.cpp`
+│   │   ├── transmit_menu.cpp  # Implementation of the transmit menu
+│   │   └── transmit_menu.h    # Header for `transmit_menu.cpp`
+│   ├── logic/                 # Application logic
+│   │   ├── receiver.cpp       # Implementation of the receiver logic
+│   │   └── transmitter.cpp    # Implementation of the transmitter logic
+│   ├── utils/                 # General utility functions
+│   │   ├── serialization.cpp  # Implementation of Serialization functions
+│   │   └── serialization.h    # Header for `serialization.cpp`
+│   └── main.cpp               # Program entry point
 ├── CMakeLists.txt         # CMake build configuration
 ├── LICENSE                # LICENSE file
 └── README.md              # Project documentation

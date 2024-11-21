@@ -8,15 +8,15 @@
 #include <atomic>
 #include <iomanip>
 
-// Buffer copia per i messaggi ricevuti
+// Buffer for view messages
 std::deque<std::string> viewMessages;
 
-// Funzione per visualizzare i messaggi ricevuti
+// Receive menu
 void receive_menu() {
     bool menuExit = false;
 
     while (!menuExit) {
-        // Copia i messaggi dal buffer principale al buffer locale
+        // Copy messages from receiver buffer to view buffer
         {
             std::lock_guard<std::mutex> lock(bufferMutex);
             while (!receivedMessages.empty()) {
@@ -25,7 +25,7 @@ void receive_menu() {
             }
         }
 
-        // Mostra i messaggi dal buffer locale
+        // Print received messages
         clearTerminal();
         printTitle();
         printBorder("MESSAGES RECEIVED");
@@ -38,14 +38,14 @@ void receive_menu() {
         }
         std::cout << "+-------------------------------------------------+\n";
 
-        // Opzioni per l'utente
+        // User option
         std::cout << "\n[R] Refresh messages   [Q] Return to main menu\n";
         std::cout << "> ";
         char choice;
         std::cin >> choice;
 
         if (choice == 'q' || choice == 'Q') {
-            menuExit = true; // Torna al menu
+            menuExit = true;
         }
     }
 }

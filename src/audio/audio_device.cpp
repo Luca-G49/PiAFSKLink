@@ -12,7 +12,7 @@ int initialize_audio_device(snd_pcm_t*& handle, unsigned int sample_rate) {
                   << "'. Reason: " << snd_strerror(err) << std::endl;
         return -1; // Device open error
     }
-    std::cout << "Audio device opened successfully!" << std::endl;
+    //std::cout << "Audio device opened successfully!" << std::endl;
 
     // Allocate and initialize hardware parameters
     snd_pcm_hw_params_alloca(&params);
@@ -69,7 +69,7 @@ int initialize_audio_device(snd_pcm_t*& handle, unsigned int sample_rate) {
         return -7; // Hardware parameters application error
     }
 
-    std::cout << "Audio device initialized with sample rate: " << sample_rate << " Hz" << std::endl;
+    //std::cout << "Audio device initialized with sample rate: " << sample_rate << " Hz" << std::endl;
     return 0; // Success
 }
 
@@ -77,6 +77,6 @@ void cleanup_audio_device(snd_pcm_t* handle) {
     if (handle) {
         snd_pcm_drain(handle);
         snd_pcm_close(handle);
-        std::cout << "Audio device cleaned up and closed successfully." << std::endl;
+        //std::cout << "Audio device cleaned up and closed successfully." << std::endl;
     }
 }

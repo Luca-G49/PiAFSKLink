@@ -2,13 +2,13 @@
 
 namespace Config {
 
-// Configurazione globale (singleton)
+// Global configuration
 AppConfig& get() {
     static AppConfig instance;
     return instance;
 }
 
-// Funzione per ripristinare la configurazione ai valori predefiniti
+// Reset default configuration
 void AppConfig::resetToDefault() {
     appName = "PiAFSKLink";
     sample_rate = 44100;          // Sample rate in Hz

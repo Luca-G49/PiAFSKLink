@@ -8,7 +8,7 @@
 #include <thread>
 #include <atomic>
 
-// Funzione per il menu principale
+// Main menu
 void main_menu() {
 
     bool menuExit = true;
@@ -27,14 +27,14 @@ void main_menu() {
         int choice;
         std::cin >> choice;
 
-        // Se l'input non è valido (numero non tra 1, 2, 3, 4)
+        // Check for valid input
         if (std::cin.fail() || choice < 1 || choice > 4) {
-            // Pulire l'errore di cin e ignorare tutto il contenuto nel buffer
+            // Clear cin buffer, ignore and continue
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "\033[1;31mInvalid choice, please try again.\033[0m\n";  // Colore rosso per l'errore
-            std::this_thread::sleep_for(std::chrono::seconds(2)); // Pausa prima di continuare
-            continue; // Torna all'inizio del ciclo
+            std::cout << "\033[1;31mInvalid choice, please try again.\033[0m\n";
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            continue;
         }
 
         switch (choice) {

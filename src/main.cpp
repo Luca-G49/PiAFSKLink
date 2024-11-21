@@ -8,7 +8,7 @@
 #include <iostream>
 #include <atomic>
 
-// Flag per controllare l'esecuzione del programma
+// Program loop execution flag
 std::atomic<bool> running(true);
 
 int main() {

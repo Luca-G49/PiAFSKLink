@@ -6,7 +6,7 @@
 // Configuration namespace
 namespace Config {
 
-// Dati di configurazione globali
+// Global configuration
 struct AppConfig {
     std::string appName = "PiAFSKLink";
     int sample_rate = 44100;          // Sample rate in Hz

@@ -5,6 +5,7 @@
 #include <mutex>
 #include <deque>
 
+// Receive tones
 void receiver_thread(std::atomic<bool>& running);
 
 extern std::deque<std::string> receivedMessages;

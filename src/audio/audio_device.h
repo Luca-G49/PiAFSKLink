@@ -1,5 +1,5 @@
-#ifndef AUDIO_UTILS_H
-#define AUDIO_UTILS_H
+#ifndef AUDIO_DEVICE_H
+#define AUDIO_DEVICE_H
 
 #include <alsa/asoundlib.h>
 

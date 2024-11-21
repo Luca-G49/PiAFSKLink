@@ -1,4 +1,4 @@
-#include "audio_utils.h"
+#include "audio_device.h"
 #include <iostream>
 
 int initialize_audio_device(snd_pcm_t*& handle, unsigned int sample_rate) {

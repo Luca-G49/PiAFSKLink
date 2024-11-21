@@ -36,6 +36,7 @@ set(SOURCES
     ${SRC_DIR}/gui/setup_menu.cpp
     ${SRC_DIR}/logic/receiver.cpp
     ${SRC_DIR}/logic/transmitter.cpp
+    ${SRC_DIR}/utils/serialization.cpp
     ${SRC_DIR}/main.cpp
 )
 
@@ -51,4 +52,5 @@ target_include_directories(PiAFSKLink PUBLIC
     ${SRC_DIR}/config
     ${SRC_DIR}/gui
     ${SRC_DIR}/logic
+    ${SRC_DIR}/utils
 )

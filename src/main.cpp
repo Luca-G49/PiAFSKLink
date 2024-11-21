@@ -1,4 +1,5 @@
 #include "gui/main_menu.h"
+#include "gui/exit_menu.h"
 #include "gui/gui_utils.h"
 #include "audio/audio_device.h"
 #include "transmitter.h"
@@ -23,6 +24,8 @@ int main() {
     running = false;
     receiverThread.join();
 
-    std::cout << "Program terminated." << std::endl;
+    // Show exit menu
+    exit_menu();
+
     return 0;
 }

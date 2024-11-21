@@ -1,10 +1,11 @@
 #include "gui_utils.h"
 #include "transmitter.h"
+#include "serialization.h"
 #include <iostream>
 #include <string>
 #include <iomanip>
 
-// Funzione per inviare messaggi
+// Transmit menu
 void transmit_menu() {
 
     bool menuExit = false;
@@ -17,17 +18,18 @@ void transmit_menu() {
 
     while (!menuExit) {
         
+        // Get message from user
         std::cout << "> ";
         std::string message;
-        std::cin >> message;
+        std::getline(std::cin, message);
 
         if (message == "q" || message == "Q") {
-            menuExit = true; // Torna al menu
+            menuExit = true;
         }
         else {
-
-            std::cout << "\n\033[1;32mMessage sent: \033[0m" << message;
-            transmit(message);
+            // Convert message into bit string and transmit
+            transmit(stringToBits(message));
+            std::cout << "\n\033[1;32mMessage sent: \033[0m" << message << " -> " << stringToBits(message);
             std::cout << std::endl << std::endl;
         }
     }

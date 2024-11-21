@@ -1,7 +1,13 @@
 #ifndef RECEIVER_H
 #define RECEIVER_H
 
-// Start the receiver to listen and decode AFSK tones
-void start_receiver();
+#include <atomic>
+#include <mutex>
+#include <deque>
+
+void receiver_thread(std::atomic<bool>& running);
+
+extern std::deque<std::string> receivedMessages;
+extern std::mutex bufferMutex;
 
 #endif

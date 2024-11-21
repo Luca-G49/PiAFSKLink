@@ -34,6 +34,7 @@ set(SOURCES
     ${SRC_DIR}/gui/receive_menu.cpp
     ${SRC_DIR}/gui/transmit_menu.cpp
     ${SRC_DIR}/gui/setup_menu.cpp
+    ${SRC_DIR}/gui/exit_menu.cpp
     ${SRC_DIR}/logic/receiver.cpp
     ${SRC_DIR}/logic/transmitter.cpp
     ${SRC_DIR}/utils/serialization.cpp

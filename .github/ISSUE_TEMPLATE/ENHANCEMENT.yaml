@@ -1,5 +1,6 @@
 name: Enhancement
 description: 'An improvement or a new feature to add to the project.'
+title: "[Enhancement]: "
 labels: ['enhancement']
 body:
   - type: markdown

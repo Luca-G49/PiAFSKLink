@@ -1,5 +1,6 @@
 name: Task
-description: 'A task to be done, like updating documentation or improving a feature.'
+description: 'A task to be done.'
+title: "[Task]: "
 labels: ['task']
 body:
   - type: markdown

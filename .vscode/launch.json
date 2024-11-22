@@ -5,7 +5,7 @@
             "name": "Debug on Raspberry",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main",
+            "program": "${workspaceFolder}/build/PiAFSKLink",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -15,12 +15,12 @@
             "miDebuggerPath": "/usr/bin/gdb",
             "setupCommands": [
               {
-                "description": "Abilita simboli di debug",
+                "description": "Enable debug information",
                 "text": "-enable-pretty-printing",
                 "ignoreFailures": true
               }
             ],
-            "preLaunchTask": "Build c++",
+            "preLaunchTask": "Build Project",
             "serverStarted": "",
             "filterStderr": true,
             "filterStdout": true

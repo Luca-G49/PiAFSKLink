@@ -1,32 +1,43 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Build c++",
-            "type": "shell",
-            "command": "g++",
-            "args": [
-                "-g",
-                "src/main.cpp",
-                "-o",
-                "build/PiAFSKLink",
-                "-lasound",
-                "-lm"
-            ],
-            "group": "build"
-        },
-        {
-            "label": "Build and Run",
-            "type": "shell",
-            "command": "cd build && make && ./PiAFSKLink",
-            "group": {
-              "kind": "build",
-              "isDefault": true
-            },
-            "problemMatcher": [],
-            "presentation": {
-              "reveal": "always"
-            }
-          }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "CMake Build",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "-S",
+        "${workspaceFolder}",
+        "-B",
+        "${workspaceFolder}/build"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "CMake Build"
+    },
+    {
+      "label": "Build Project",
+      "type": "shell",
+      "command": "cmake",
+      "args": [
+        "--build",
+        "${workspaceFolder}/build",
+        "--config",
+        "Debug"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Build Project"
+    }
+  ]
 }

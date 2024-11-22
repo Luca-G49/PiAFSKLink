@@ -1,0 +1,29 @@
+name: Enhancement
+description: 'An improvement or a new feature to add to the project.'
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Description
+        Provide a detailed description of the enhancement or new feature.
+
+  - type: input
+    attributes:
+      label: 'What needs improvement?'
+      placeholder: 'Description of the improvement to be made'
+
+  - type: input
+    attributes:
+      label: 'Why is this important?'
+      placeholder: 'Why is this enhancement needed?'
+
+  - type: input
+    attributes:
+      label: 'Proposed implementation'
+      placeholder: 'Suggestions on how to implement the improvement'
+
+  - type: textarea
+    attributes:
+      label: 'Additional notes'
+      placeholder: 'Any extra details or considerations'

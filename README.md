@@ -42,7 +42,7 @@ sudo apt-get install libasound2-dev
 
 ## Build Instructions
 
-The project uses CMake to configure and build the project. Below are the steps to compile and run the code.
+This project uses **CMake** as the build system to manage and configure the build process.
 
 If you don't have CMake installed on your Raspberry Pi, install it using the following command:
 

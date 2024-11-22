@@ -1,71 +1,53 @@
 #include "transmitter.h"
-#include "app_config.h"
 #include "audio_device.h"
+#include "app_config.h"
+#include <vector>
 #include <cmath>
 #include <iostream>
 
-// Get App configuration
-Config::AppConfig& config = Config::get();
-
-// Generate a sine wave tone of the specified frequency, volume, and duration
-void generate_tone(double frequency, snd_pcm_t* handle, double volume, int duration) {
-
-    const int NUM_SAMPLES = config.sample_rate * (duration / 1000000.0); // Number of samples
-    short* buffer = new short[NUM_SAMPLES];
+// Generate sine wave samples for a specific tone
+std::vector<short> generate_tone_samples(double frequency, double volume, int duration_us, unsigned int sample_rate) {
     const double two_pi = 2.0 * M_PI;
+    int num_samples = sample_rate * (duration_us / 1e6);
+    std::vector<short> samples(num_samples);
 
-    // Generate sine wave samples
-    for (int t = 0; t < NUM_SAMPLES; t++) {
-        buffer[t] = static_cast<short>(volume * 32767 * sin(two_pi * frequency * t / config.sample_rate));
+    for (int t = 0; t < num_samples; ++t) {
+        samples[t] = static_cast<short>(volume * 32767 * sin(two_pi * frequency * t / sample_rate));
     }
-
-    // Write samples to the audio device
-    //Stereo: 4 bytes per frame (2 sample, 1 sx + 1 dx))
-    //Mono: 2 bytes per frame (1 sample))
-    int frames = NUM_SAMPLES; // (Stereo => NUM_SAMPLES / 2)
-    int res = snd_pcm_writei(handle, buffer, frames);
-    if (res == -EPIPE) {
-        std::cerr << "Buffer underrun occurred!" << std::endl;
-    }
-
-    delete[] buffer;
+    return samples;
 }
 
-// Play a sequence of bits as tones
-void play_bit_sequence(const std::vector<int>& bit_sequence, snd_pcm_t* handle) {
-    for (int bit : bit_sequence) {
-        // Determine the frequency based on the bit value
-        double frequency = (bit == 0) ? config.tone_0 : config.tone_1;
-        generate_tone(frequency, handle, config.volume, config.tone_duration);
-    }
-}
+void transmit(const std::string& input_bits) {
+    Config::AppConfig& config = Config::get();
+    AudioDevice audio;
 
-void transmit(std::string input_bits) {
-
-    snd_pcm_t *handle;
-
-    // Initialize the audio device for playback
-    int result = initialize_audio_device(handle, config.sample_rate);
-    if (result < 0)
-    {
-        std::cerr << "Audio initialization failed with error code: " << result << std::endl;
+    // Initialize the audio device
+    if (!audio.init(config.sample_rate, false)) {
+        std::cerr << "Failed to initialize audio device!" << std::endl;
+        return;
     }
 
-    // Bit sequence
-    std::vector<int> bit_sequence;
+    // Pre-generate tone samples for bit 0 and bit 1
+    std::vector<short> tone_0_samples = generate_tone_samples(config.tone_0, config.volume, config.tone_duration, config.sample_rate);
+    std::vector<short> tone_1_samples = generate_tone_samples(config.tone_1, config.volume, config.tone_duration, config.sample_rate);
 
-    // Convert input string to a bit sequence
-    for (char bit : input_bits)
-    {
-        if (bit == '0' || bit == '1')
-        {
-            bit_sequence.push_back(bit - '0'); // Convert char to int
+    // Create the buffer for the entire transmission
+    std::vector<short> buffer;
+
+    // Construct the buffer by appending pre-generated tone samples
+    for (char bit : input_bits) {
+        if (bit == '0') {
+            buffer.insert(buffer.end(), tone_0_samples.begin(), tone_0_samples.end());
+        } else if (bit == '1') {
+            buffer.insert(buffer.end(), tone_1_samples.begin(), tone_1_samples.end());
         }
     }
-    
-    play_bit_sequence(bit_sequence, handle);
+
+    // Play the entire buffer
+    if (!audio.playback(buffer)) {
+        std::cerr << "Error during playback!" << std::endl;
+    }
 
     // Clean up the audio device
-    cleanup_audio_device(handle);
-
+    audio.cleanup();
 }

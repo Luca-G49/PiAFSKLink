@@ -1,82 +1,111 @@
 #include "audio_device.h"
 #include <iostream>
 
-int initialize_audio_device(snd_pcm_t*& handle, unsigned int sample_rate) {
-    const char* device = "default"; // Default audio device
-    snd_pcm_hw_params_t* params;
+AudioDevice::AudioDevice() : handle(nullptr), sample_rate(0), is_capture(false) {}
 
-    // Open the ALSA device for playback
-    int err = snd_pcm_open(&handle, device, SND_PCM_STREAM_PLAYBACK, 0);
-    if (err < 0) {
-        std::cerr << "Error: Unable to open audio device '" << device 
-                  << "'. Reason: " << snd_strerror(err) << std::endl;
-        return -1; // Device open error
+AudioDevice::~AudioDevice() {
+    cleanup();
+}
+
+bool AudioDevice::init(unsigned int sample_rate, bool is_capture) {
+    this->sample_rate = sample_rate;
+    this->is_capture = is_capture;
+
+    const char* device = "default";
+    auto mode = is_capture ? SND_PCM_STREAM_CAPTURE : SND_PCM_STREAM_PLAYBACK;
+
+    // Open the ALSA device
+    if (snd_pcm_open(&handle, device, mode, 0) < 0) {
+        std::cerr << "Error: Unable to open audio device." << std::endl;
+        return false;
     }
-    //std::cout << "Audio device opened successfully!" << std::endl;
 
-    // Allocate and initialize hardware parameters
+    // Configure the device
+    return configure_device();
+}
+
+bool AudioDevice::configure_device() {
+    snd_pcm_hw_params_t* params;
     snd_pcm_hw_params_alloca(&params);
-    err = snd_pcm_hw_params_any(handle, params);
-    if (err < 0) {
-        std::cerr << "Error: Unable to get device parameters. Reason: " 
-                  << snd_strerror(err) << std::endl;
-        snd_pcm_close(handle);
-        return -2; // Hardware parameter allocation error
+
+    // Set the device parameters
+    if (snd_pcm_hw_params_any(handle, params) < 0) {
+        std::cerr << "Error: Unable to configure hardware parameters." << std::endl;
+        return false;
     }
 
     // Set access type
-    err = snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED);
-    if (err < 0) {
-        std::cerr << "Error: Unable to set interleaved access. Reason: " 
-                  << snd_strerror(err) << std::endl;
-        snd_pcm_close(handle);
-        return -3; // Access type setup error
+    if (snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED) < 0) {
+        std::cerr << "Error: Unable to set interleaved access." << std::endl;
+        return false;
     }
 
     // Set the audio format
-    err = snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE);
-    if (err < 0) {
-        std::cerr << "Error: Unable to set audio format. Reason: " 
-                  << snd_strerror(err) << std::endl;
-        snd_pcm_close(handle);
-        return -4; // Audio format setup error
+    if (snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE) < 0) {
+        std::cerr << "Error: Unable to set audio format." << std::endl;
+        return false;
     }
 
-    // Set the number of channels
-    err = snd_pcm_hw_params_set_channels(handle, params, 1); // Mono channel
-    if (err < 0) {
-        std::cerr << "Error: Unable to set the number of channels. Reason: " 
-                  << snd_strerror(err) << std::endl;
-        snd_pcm_close(handle);
-        return -5; // Channel setup error
+    // Set the number of channels (Mono)
+    if (snd_pcm_hw_params_set_channels(handle, params, 1) < 0) {
+        std::cerr << "Error: Unable to set channel count." << std::endl;
+        return false;
     }
 
     // Set the sample rate
-    err = snd_pcm_hw_params_set_rate_near(handle, params, &sample_rate, nullptr);
-    if (err < 0) {
-        std::cerr << "Error: Unable to set sample rate. Reason: " 
-                  << snd_strerror(err) << std::endl;
-        snd_pcm_close(handle);
-        return -6; // Sample rate setup error
+    if (snd_pcm_hw_params_set_rate_near(handle, params, &sample_rate, nullptr) < 0) {
+        std::cerr << "Error: Unable to set sample rate." << std::endl;
+        return false;
     }
 
     // Apply the hardware parameters
-    err = snd_pcm_hw_params(handle, params);
-    if (err < 0) {
-        std::cerr << "Error: Failed to configure hardware parameters. Reason: " 
-                  << snd_strerror(err) << std::endl;
-        snd_pcm_close(handle);
-        return -7; // Hardware parameters application error
+    if (snd_pcm_hw_params(handle, params) < 0) {
+        std::cerr << "Error: Unable to apply hardware parameters." << std::endl;
+        return false;
     }
 
-    //std::cout << "Audio device initialized with sample rate: " << sample_rate << " Hz" << std::endl;
-    return 0; // Success
+    return true;
 }
 
-void cleanup_audio_device(snd_pcm_t* handle) {
+// Playback function
+bool AudioDevice::playback(const std::vector<short>& samples) {
+    int frames = samples.size();
+    const short* data = samples.data();
+
+    // Write audio samples to the device
+    while (frames > 0) {
+        int written = snd_pcm_writei(handle, data, frames);
+        if (written == -EPIPE) {
+            std::cerr << "Buffer underrun occurred. Recovering..." << std::endl;
+            snd_pcm_prepare(handle);
+        } else if (written < 0) {
+            std::cerr << "Error during playback: " << snd_strerror(written) << std::endl;
+            return false;
+        } else {
+            frames -= written;
+            data += written;
+        }
+    }
+
+    return true;
+}
+
+// Capture function
+bool AudioDevice::capture(std::vector<short>& buffer, size_t frames) {
+    buffer.resize(frames);
+    int read = snd_pcm_readi(handle, buffer.data(), frames);
+    if (read < 0) {
+        std::cerr << "Error during capture: " << snd_strerror(read) << std::endl;
+        return false;
+    }
+    return true;
+}
+
+// Cleanup funtion
+void AudioDevice::cleanup() {
     if (handle) {
         snd_pcm_drain(handle);
         snd_pcm_close(handle);
-        //std::cout << "Audio device cleaned up and closed successfully." << std::endl;
+        handle = nullptr;
     }
 }

@@ -60,18 +60,6 @@ To use these tasks, simply open the Command Palette in Visual Studio Code (Ctrl+
 
 These tasks make it easier to build and manage the project directly from within Visual Studio Code.
 
-## Milestones
-
-### Current Milestone: `v1.0.0`
-
-- [ ] #1
-- [ ] #2
-- [ ] #3
-- [ ] #4
-- [ ] #5
-- [ ] #6
-- [ ] #7
-
 ## Project structure
 ```
 PiAFSKLink/

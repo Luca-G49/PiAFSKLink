@@ -1,0 +1,29 @@
+name: Question
+description: 'Ask a question related to the project.'
+labels: ['question']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Question
+        Please provide as much detail as possible to help others understand your question.
+
+  - type: input
+    attributes:
+      label: 'What is your question?'
+      placeholder: 'Describe your question here'
+
+  - type: input
+    attributes:
+      label: 'What version of the project are you using?'
+      placeholder: 'e.g. 1.0.0, latest commit, etc.'
+
+  - type: input
+    attributes:
+      label: 'What have you tried so far?'
+      placeholder: 'Explain any steps you have taken to solve the issue.'
+
+  - type: textarea
+    attributes:
+      label: 'Additional details or context'
+      placeholder: 'Provide any additional information or context that might help others understand your question.'

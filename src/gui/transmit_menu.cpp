@@ -13,7 +13,7 @@ void transmit_menu() {
     clearTerminal();
     printTitle();
     printBorder("SEND MESSAGE");
-    std::cout << "| Enter a bit sequence (type '[Q]' to return):    |\n";
+    std::cout << "| Enter message (type '[Q]' to return):           |\n";
     std::cout << "+-------------------------------------------------+\n";
 
     while (!menuExit) {

@@ -13,6 +13,6 @@ void receiver_thread(std::atomic<bool>& running) {
     while (running) {
         std::this_thread::sleep_for(std::chrono::seconds(1)); // Simulate receiver delay
         std::lock_guard<std::mutex> lock(bufferMutex);
-        receivedMessages.push_back("Received message #" + std::to_string(++counter));
+        receivedMessages.push_back("Received message #" + std::to_string(++counter)); // Simulate receiver
     }
 }

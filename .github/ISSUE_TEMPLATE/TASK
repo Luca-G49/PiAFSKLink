@@ -1,0 +1,29 @@
+name: Task
+description: 'A task to be done, like updating documentation or improving a feature.'
+labels: ['task']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Description
+        Briefly describe the task.
+
+  - type: input
+    attributes:
+      label: 'What needs to be done?'
+      placeholder: 'Description of the task'
+
+  - type: input
+    attributes:
+      label: 'Who is responsible?'
+      placeholder: 'Name of the assignee'
+
+  - type: input
+    attributes:
+      label: 'Due date (optional)'
+      placeholder: 'Date or deadline for completing the task'
+
+  - type: textarea
+    attributes:
+      label: 'Additional notes'
+      placeholder: 'Any extra information or context'

@@ -16,6 +16,7 @@ struct AppConfig {
     double tone_1 = 3600.0;           // Tone frequency for bit 1 in Hz
     double tone_start = 500.0;        // Tone frequency for start bit sequence in Hz
     double tone_end = 1000.0;         // Tone frequency for stop bit sequence in Hz
+    int end_tone_deadline = 10;       // Tone end deadline from tone start in seconds
 
     // Reset default configuration
     void resetToDefault();

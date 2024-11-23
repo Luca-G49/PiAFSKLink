@@ -27,12 +27,19 @@ void transmit(const std::string& input_bits) {
         return;
     }
 
+    // Pre-generate tone samples for start and end tone
+    std::vector<short> start_tone_samples = generate_tone_samples(config.start_tone, config.volume, config.start_tone_duration, config.sample_rate);
+    std::vector<short> end_tone_samples = generate_tone_samples(config.end_tone, config.volume, config.end_tone_duration, config.sample_rate);
+
     // Pre-generate tone samples for bit 0 and bit 1
     std::vector<short> tone_0_samples = generate_tone_samples(config.tone_0, config.volume, config.tone_duration, config.sample_rate);
     std::vector<short> tone_1_samples = generate_tone_samples(config.tone_1, config.volume, config.tone_duration, config.sample_rate);
 
     // Create the buffer for the entire transmission
     std::vector<short> buffer;
+
+    // Add start tone to buffer
+    buffer.insert(buffer.end(), start_tone_samples.begin(), start_tone_samples.end());
 
     // Construct the buffer by appending pre-generated tone samples
     for (char bit : input_bits) {
@@ -42,6 +49,9 @@ void transmit(const std::string& input_bits) {
             buffer.insert(buffer.end(), tone_1_samples.begin(), tone_1_samples.end());
         }
     }
+
+    // Add end tone to buffer
+    buffer.insert(buffer.end(), end_tone_samples.begin(), end_tone_samples.end());
 
     // Play the entire buffer
     if (!audio.playback(buffer)) {

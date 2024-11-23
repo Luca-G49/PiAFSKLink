@@ -38,6 +38,7 @@ set(SOURCES
     ${SRC_DIR}/logic/receiver.cpp
     ${SRC_DIR}/logic/transmitter.cpp
     ${SRC_DIR}/utils/serialization.cpp
+    ${SRC_DIR}/utils/fft.cpp
     ${SRC_DIR}/main.cpp
 )
 
@@ -45,7 +46,7 @@ set(SOURCES
 add_executable(PiAFSKLink ${SOURCES})
 
 # Link the ALSA library
-target_link_libraries(PiAFSKLink asound)
+target_link_libraries(PiAFSKLink asound -lfftw3)
 
 # Includi le directory per gli header
 target_include_directories(PiAFSKLink PUBLIC

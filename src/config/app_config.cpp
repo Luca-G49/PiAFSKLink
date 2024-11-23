@@ -13,9 +13,13 @@ void AppConfig::resetToDefault() {
     appName = "PiAFSKLink";
     sample_rate = 44100;          // Sample rate in Hz
     volume = 0.5;                 // Playback volume level (0.0 - 1.0)
-    tone_duration = 100000;       // Duration of each tone in microseconds
+    tone_duration = 10000;       // Duration of each tone in microseconds
     tone_0 = 2200.0;              // Tone frequency for bit 0 in Hz
     tone_1 = 3600.0;              // Tone frequency for bit 1 in Hz
+    start_tone_duration = 10000; // Duration of start tone in microseconds
+    end_tone_duration = 10000;   // Duration of end tone in microseconds
+    start_tone = 200.0;          // Tone frequency for start bit sequence in Hz
+    end_tone = 500.0;            // Tone frequency for stop bit sequence in Hz
 }
 
 } // namespace Config

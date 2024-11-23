@@ -28,8 +28,9 @@ PiAFSKLink operates by modulating and demodulating data into audio signals using
 ## Requirements
 
 - **Raspberry Pi** (with Raspbian OS)
-- **ALSA** (Advanced Linux Sound Architecture) library for audio playback and capture.
 - **C++17 or later** for compiling the code.
+- **ALSA** (Advanced Linux Sound Architecture) library for audio playback and capture.
+- **FFTW** (Fast Fourier Transform) library.
 
 ### Software Dependencies
 
@@ -38,6 +39,13 @@ To install ALSA development libraries:
 ```bash
 sudo apt-get update
 sudo apt-get install libasound2-dev
+```
+
+To install FFTW development libraries:
+
+```bash
+sudo apt-get update
+sudo apt-get install libfftw3-dev
 ```
 
 ## Build Instructions
@@ -91,10 +99,12 @@ PiAFSKLink/
 │   │   ├── receiver.cpp       # Implementation of the receiver logic
 │   │   └── transmitter.cpp    # Implementation of the transmitter logic
 │   ├── utils/                 # General utility functions
+│   │   ├── fft.cpp            # Implementation of FFT fuctions.
+│   │   ├── fft.h              # Header for `fft.cpp`
 │   │   ├── serialization.cpp  # Implementation of Serialization functions
 │   │   └── serialization.h    # Header for `serialization.cpp`
 │   └── main.cpp               # Program entry point
-├── CMakeLists.txt         # CMake build configuration
-├── LICENSE                # LICENSE file
-└── README.md              # Project documentation
+├── CMakeLists.txt             # CMake build configuration
+├── LICENSE                    # LICENSE file
+└── README.md                  # Project documentation
 ```

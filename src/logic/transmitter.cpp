@@ -28,8 +28,8 @@ void transmit(const std::string& input_bits) {
     }
 
     // Pre-generate tone samples for start and end tone
-    std::vector<short> start_tone_samples = generate_tone_samples(config.start_tone, config.volume, config.start_tone_duration, config.sample_rate);
-    std::vector<short> end_tone_samples = generate_tone_samples(config.end_tone, config.volume, config.end_tone_duration, config.sample_rate);
+    std::vector<short> start_tone_samples = generate_tone_samples(config.tone_start, config.volume, config.tone_duration, config.sample_rate);
+    std::vector<short> end_tone_samples = generate_tone_samples(config.tone_end, config.volume, config.tone_duration, config.sample_rate);
 
     // Pre-generate tone samples for bit 0 and bit 1
     std::vector<short> tone_0_samples = generate_tone_samples(config.tone_0, config.volume, config.tone_duration, config.sample_rate);

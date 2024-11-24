@@ -1,25 +1,40 @@
 #include "logger.h"
 #include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/sinks/stdout_color_sinks.h>
 
 // Definition of the static logger
 std::shared_ptr<spdlog::logger> Logger::logger = nullptr;
 
-void Logger::init() {
-    // Create a sink for the terminal (stdout) and one for the log file
-    auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
-    console_sink->set_level(spdlog::level::debug);
+void Logger::init()
+{
+    if (logger)
+    {
+        // Avoid reinitialization if the logger is already set
+        return;
+    }
 
-    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/app.log", true);
-    file_sink->set_level(spdlog::level::info);
+    try
+    {
+        // Create the logger and assign it to the static logger variable
+        logger = spdlog::basic_logger_mt("PiAFSKLink", "logs/system.log");
 
-    // Create the logger with the two sinks
-    logger = std::make_shared<spdlog::logger>("multi_sink", spdlog::sinks_init_list{console_sink, file_sink});
+        // Set the logging level and flush policy
+        logger->set_level(spdlog::level::info);
+        spdlog::flush_on(spdlog::level::info);
 
-    // Set the global log level
-    logger->set_level(spdlog::level::debug); // All logs >= debug
+        // Log initialization success
+        logger->info("Logger initialized successfully.");
+    }
+    catch (const spdlog::spdlog_ex &ex)
+    {
+        throw std::runtime_error(std::string("Logger initialization failed: ") + ex.what());
+    }
 }
 
-std::shared_ptr<spdlog::logger>& Logger::getLogger() {
+std::shared_ptr<spdlog::logger> &Logger::getLogger()
+{
+    if (!logger)
+    {
+        throw std::runtime_error("Logger is not initialized. Call Logger::init() first.");
+    }
     return logger;
 }

@@ -25,6 +25,8 @@ include_directories(include)
 # Percorso principale dei sorgenti
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 # Aggiungi tutti i file sorgenti
 set(SOURCES
     ${SRC_DIR}/audio/audio_device.cpp
@@ -50,9 +52,9 @@ target_link_libraries(PiAFSKLink asound -lfftw3)
 
 # Includi le directory per gli header
 target_include_directories(PiAFSKLink PUBLIC
-    ${SRC_DIR}/audio
-    ${SRC_DIR}/config
-    ${SRC_DIR}/gui
-    ${SRC_DIR}/logic
-    ${SRC_DIR}/utils
+    ${INCLUDE_DIR}/audio
+    ${INCLUDE_DIR}/config
+    ${INCLUDE_DIR}/gui
+    ${INCLUDE_DIR}/logic
+    ${INCLUDE_DIR}/utils
 )

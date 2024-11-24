@@ -21,7 +21,7 @@ int main() {
     main_menu();
 
     // Stop receiver thread and wait conclusion
-    running = false;
+    running.store(false);
     receiverThread.join();
 
     // Show exit menu

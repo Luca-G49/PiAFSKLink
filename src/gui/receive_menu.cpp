@@ -29,17 +29,18 @@ void receive_menu() {
         clearTerminal();
         printTitle();
         printBorder("MESSAGES RECEIVED");
+        std::cout << "| " << std::setw(48) << std::left << "[R] Refresh messages   [Q] Return to main menu" << "|\n";
+        std::cout << "+-------------------------------------------------+\n\n";
+
         if (!viewMessages.empty()) {
             for (const auto& msg : viewMessages) {
-                std::cout << "| " << std::setw(48) << std::left << msg << "|\n";
+                std::cout << "> " << std::setw(48) << std::left << msg << "\n\n";
             }
         } else {
-            std::cout << "| " << std::setw(48) << std::left << "No new messages." << "|\n";
+            std::cout << "> " << std::setw(48) << std::left << "No new messages." << "\n";
         }
-        std::cout << "+-------------------------------------------------+\n";
 
         // User option
-        std::cout << "\n[R] Refresh messages   [Q] Return to main menu\n";
         std::cout << "> ";
         char choice;
         std::cin >> choice;

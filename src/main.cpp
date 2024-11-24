@@ -1,7 +1,7 @@
-#include "gui/main_menu.h"
-#include "gui/exit_menu.h"
-#include "gui/gui_utils.h"
-#include "audio/audio_device.h"
+#include "main_menu.h"
+#include "exit_menu.h"
+#include "gui_utils.h"
+#include "audio_device.h"
 #include "transmitter.h"
 #include "receiver.h"
 #include <thread>

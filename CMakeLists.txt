@@ -1,4 +1,4 @@
-# Minimum version of CMake required
+# Minimum required version of CMake
 cmake_minimum_required(VERSION 3.10)
 
 # Project name and language
@@ -8,49 +8,24 @@ project(PiAFSKLink LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Include directory for header files
-include_directories(include)
-
-# Add subdirectory
-#add_subdirectory(src)
-
-# Add all source files
-#set(SOURCE_FILES
-#    src/main.cpp
-#    src/transmitter.cpp
-#    src/receiver.cpp
-#    src/audio_utils.cpp
-#)
-
-# Percorso principale dei sorgenti
+# Set the source and include directories
 set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# Aggiungi tutti i file sorgenti
-set(SOURCES
-    ${SRC_DIR}/audio/audio_device.cpp
-    ${SRC_DIR}/config/app_config.cpp
-    ${SRC_DIR}/gui/gui_utils.cpp
-    ${SRC_DIR}/gui/main_menu.cpp
-    ${SRC_DIR}/gui/receive_menu.cpp
-    ${SRC_DIR}/gui/transmit_menu.cpp
-    ${SRC_DIR}/gui/setup_menu.cpp
-    ${SRC_DIR}/gui/exit_menu.cpp
-    ${SRC_DIR}/logic/receiver.cpp
-    ${SRC_DIR}/logic/transmitter.cpp
-    ${SRC_DIR}/utils/serialization.cpp
-    ${SRC_DIR}/utils/fft.cpp
+# Automatically collect all source files
+file(GLOB SOURCES
+    ${SRC_DIR}/audio/*.cpp
+    ${SRC_DIR}/config/*.cpp
+    ${SRC_DIR}/gui/*.cpp
+    ${SRC_DIR}/logic/*.cpp
+    ${SRC_DIR}/utils/*.cpp
     ${SRC_DIR}/main.cpp
 )
 
-# Add the executable
+# Create the executable
 add_executable(PiAFSKLink ${SOURCES})
 
-# Link the ALSA library
-target_link_libraries(PiAFSKLink asound -lfftw3)
-
-# Includi le directory per gli header
+# Include directories for headers
 target_include_directories(PiAFSKLink PUBLIC
     ${INCLUDE_DIR}/audio
     ${INCLUDE_DIR}/config
@@ -58,3 +33,25 @@ target_include_directories(PiAFSKLink PUBLIC
     ${INCLUDE_DIR}/logic
     ${INCLUDE_DIR}/utils
 )
+
+# Fetch and link spdlog if it's not already installed system-wide
+include(FetchContent)
+FetchContent_Declare(
+    spdlog
+    GIT_REPOSITORY https://github.com/gabime/spdlog.git
+    GIT_TAG v1.9.2  # Specify the version you want, or use the latest
+)
+FetchContent_MakeAvailable(spdlog)
+
+# Link necessary libraries: spdlog, ALSA, and FFTW3
+target_link_libraries(PiAFSKLink PRIVATE
+    spdlog::spdlog
+    asound
+    fftw3
+)
+
+# Set additional compile options (optional but recommended)
+target_compile_options(PiAFSKLink PRIVATE -Wall -Wextra -pedantic)
+
+# Optional: Set CMake to use C++20 standard if not already specified globally
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")

@@ -1,9 +1,9 @@
 #include "transmitter.h"
 #include "audio_device.h"
 #include "app_config.h"
+#include "logger.h"
 #include <vector>
 #include <cmath>
-#include <iostream>
 
 // Generate sine wave samples for a specific tone
 std::vector<short> generate_tone_samples(double frequency, double volume, int duration_us, unsigned int sample_rate) {
@@ -23,7 +23,7 @@ void transmit(const std::string& input_bits) {
 
     // Initialize the audio device
     if (!audio.init(config.sample_rate, false)) {
-        std::cerr << "Failed to initialize audio device!" << std::endl;
+        Logger::getLogger()->error("Failed to initialize audio device!");
         return;
     }
 
@@ -55,7 +55,7 @@ void transmit(const std::string& input_bits) {
 
     // Play the entire buffer
     if (!audio.playback(buffer)) {
-        std::cerr << "Error during playback!" << std::endl;
+        Logger::getLogger()->error("Error during playback!");
     }
 
     // Clean up the audio device

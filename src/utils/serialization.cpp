@@ -1,5 +1,5 @@
 #include "serialization.h"
-#include <iostream>
+#include "logger.h"
 #include <bitset>
 
 // Function to serialize a string into a vector of bits (bools)
@@ -59,7 +59,7 @@ std::string bitsToString(const std::string& bits) {
     
     // Ensure the bit string length is a multiple of 8 (valid byte sequence)
     if (bits.length() % 8 != 0) {
-        std::cerr << "Error: The bit string length must be a multiple of 8!" << std::endl;
+        Logger::getLogger()->error("Error: The bit string length must be a multiple of 8!");
         return "";
     }
 

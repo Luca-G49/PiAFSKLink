@@ -3,9 +3,9 @@
 #include "audio_device.h"
 #include "serialization.h"
 #include "fft.h"
+#include "logger.h"
 #include <fftw3.h>
 #include <vector>
-#include <iostream>
 #include <cmath>
 #include <thread>
 #include <mutex>
@@ -50,7 +50,7 @@ void receiver_thread(std::atomic<bool>& running) {
 
     // Initialize the audio device for capture
     if (!audio.init(config.sample_rate, true)) {
-        std::cerr << "Failed to initialize audio device for capture!" << std::endl;
+        Logger::getLogger()->error("Failed to initialize audio device for capture!");
         return;
     }
 
@@ -63,13 +63,13 @@ void receiver_thread(std::atomic<bool>& running) {
 
         // Capture samples and check for the start tone
         if (!audio.capture(captured_samples, samples_per_bit)) {
-            std::cerr << "Audio capture failed!" << std::endl;
+            Logger::getLogger()->error("Audio capture failed!");
             continue; // Go back to looking for the start tone
         }
 
         // Detect the start tone
         if (detect_tone(captured_samples, config.sample_rate, config.tone_start)) {
-            //std::cout << "Start tone detected! Decoding message..." << std::endl;
+            Logger::getLogger()->info("Start tone detected! Decoding message...");
 
             auto start_time = std::chrono::steady_clock::now();
             auto timeout_duration = std::chrono::seconds(config.tone_end_deadline); // Timeout for the current message
@@ -78,13 +78,13 @@ void receiver_thread(std::atomic<bool>& running) {
             // Start decoding the bits
             while (running.load()) {
                 if (!audio.capture(captured_samples, samples_per_bit)) {
-                    std::cerr << "Failed to capture samples!" << std::endl;
+                    Logger::getLogger()->error("Failed to capture samples!");
                     break; // Exit decoding and look for a new message
                 }
 
                 // Check if the samples are sufficient
                 if (captured_samples.size() < samples_per_bit) {
-                    std::cerr << "Insufficient captured samples!" << std::endl;
+                    Logger::getLogger()->error("Insufficient captured samples!");
                     break; // Exit decoding and look for a new message
                 }
 
@@ -97,7 +97,7 @@ void receiver_thread(std::atomic<bool>& running) {
 
                 // Detect the end tone
                 if (detect_tone(captured_samples, config.sample_rate, config.tone_end)) {
-                    //std::cout << "End tone detected! Transmission completed." << std::endl;
+                    Logger::getLogger()->info("End tone detected! Transmission completed.");
                     
                     // Insert the message into the buffer
                     {
@@ -111,7 +111,7 @@ void receiver_thread(std::atomic<bool>& running) {
                 // Check timeout
                 auto elapsed_time = std::chrono::steady_clock::now() - start_time;
                 if (elapsed_time > timeout_duration) {
-                    std::cerr << "Timeout! Stopping reception of current message." << std::endl;
+                    Logger::getLogger()->error("Timeout! Stopping reception of current message.");
                     break; // Exit decoding and look for a new message
                 }
             }

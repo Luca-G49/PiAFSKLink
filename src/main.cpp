@@ -4,9 +4,9 @@
 #include "audio_device.h"
 #include "transmitter.h"
 #include "receiver.h"
+#include "logger.h"
 #include <thread>
 #include <vector>
-#include <iostream>
 #include <atomic>
 
 // Program loop execution flag
@@ -14,12 +14,15 @@ std::atomic<bool> running(true);
 
 int main() {
 
+    // Init logger
+    Logger::init();
+
     // Create receiver thread
     std::thread receiverThread(receiver_thread, std::ref(running));
 
     // Show main menu
     main_menu();
-
+    
     // Stop receiver thread and wait conclusion
     running.store(false);
     receiverThread.join();

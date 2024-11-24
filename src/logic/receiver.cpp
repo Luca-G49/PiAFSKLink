@@ -4,6 +4,7 @@
 #include "serialization.h"
 #include "fft.h"
 #include "logger.h"
+#include "get_time.h"
 #include <fftw3.h>
 #include <vector>
 #include <cmath>
@@ -102,7 +103,7 @@ void receiver_thread(std::atomic<bool>& running) {
                     // Insert the message into the buffer
                     {
                         std::lock_guard<std::mutex> lock(bufferMutex);
-                        receivedMessages.push_back(bitsToString(binary_sequence));
+                        receivedMessages.push_back("[" + getCurrentTime() + "] :" + bitsToString(binary_sequence));
                     }
                     
                     break; // Message received, go back to looking for a new message

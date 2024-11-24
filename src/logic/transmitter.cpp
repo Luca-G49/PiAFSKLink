@@ -56,6 +56,8 @@ void transmit(const std::string& input_bits) {
     // Play the entire buffer
     if (!audio.playback(buffer)) {
         Logger::getLogger()->error("Error during playback!");
+    } else {
+        Logger::getLogger()->info("Sent message");
     }
 
     // Clean up the audio device

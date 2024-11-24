@@ -18,7 +18,7 @@ void AppConfig::resetToDefault() {
     tone_1 = 3600.0;              // Tone frequency for bit 1 in Hz
     tone_start = 200.0;           // Tone frequency for start bit sequence in Hz
     tone_end = 500.0;             // Tone frequency for stop bit sequence in Hz
-    end_tone_deadline = 10;       // Tone end deadline from tone start in seconds
+    tone_end_deadline = 10;       // Tone end deadline from tone start in seconds
 }
 
 } // namespace Config

@@ -72,7 +72,7 @@ void receiver_thread(std::atomic<bool>& running) {
             //std::cout << "Start tone detected! Decoding message..." << std::endl;
 
             auto start_time = std::chrono::steady_clock::now();
-            auto timeout_duration = std::chrono::seconds(config.end_tone_deadline); // Timeout for the current message
+            auto timeout_duration = std::chrono::seconds(config.tone_end_deadline); // Timeout for the current message
             std::string binary_sequence;
 
             // Start decoding the bits
@@ -117,6 +117,9 @@ void receiver_thread(std::atomic<bool>& running) {
             }
         }
     }
+
+    // Clean up the audio device
+    audio.cleanup();
 
     //std::cout << "Receiver thread terminated." << std::endl;
 }

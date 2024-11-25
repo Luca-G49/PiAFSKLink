@@ -34,14 +34,8 @@ target_include_directories(PiAFSKLink PUBLIC
     ${INCLUDE_DIR}/utils
 )
 
-# Fetch and link spdlog if it's not already installed system-wide
-include(FetchContent)
-FetchContent_Declare(
-    spdlog
-    GIT_REPOSITORY https://github.com/gabime/spdlog.git
-    GIT_TAG v1.9.2  # Specify the version you want, or use the latest
-)
-FetchContent_MakeAvailable(spdlog)
+# Link spdlog library
+find_package(spdlog REQUIRED)
 
 # Link necessary libraries: spdlog, ALSA, and FFTW3
 target_link_libraries(PiAFSKLink PRIVATE

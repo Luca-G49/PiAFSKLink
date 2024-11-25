@@ -73,36 +73,45 @@ These tasks make it easier to build and manage the project directly from within 
 PiAFSKLink/
 ├── build/                     # Build directory
 ├── include/                   # Project header files
-│   ├── receiver.h             # Header for `receiver.cpp`
-│   └── transmitter.h          # Header for `transmitter.cpp`
-├── src/                       # Main source code
-│   ├── audio/                 # Audio device-related modules
-│   │   ├── audio_device.cpp   # Implementation of audio device handling
+├── audio/                     # Audio device-related modules
 │   │   └── audio_device.h     # Header for `audio_device.cpp`
 │   ├── config/                # Configuration-related modules
-│   │   ├── app_config.cpp     # Implementation of application configuration
-│   │   └── app_config.h       # Header for `app_config.cpp`
+│   │   └── app_config.h       # Header for `audio_device.cpp`
+│   ├── gui/                   # User interface modules
+│   │   ├── exit_menu.h        # Header for `exit_menu.cpp`
+│   │   ├── gui_utils.h        # Header for `gui_utils.cpp`
+│   │   ├── main_menu.h        # Header for `main_menu.cpp`
+│   │   ├── receive_menu.h     # Header for `receive_menu.cpp`
+│   │   ├── setup_menu.h       # Header for `setup_menu.cpp`
+│   │   └── transmit_menu.h    # Header for `transmit_menu.cpp`
+│   ├── logic/                 # Application logic
+│   │   ├── receiver.h         # Header for `receiver.cpp`
+│   │   └── transmitter.h      # Header for `transmitter.cpp`
+│   └── utils/                 # General utility functions
+│       ├── fft.h              # Header for `fft.cpp`
+│       ├── get_time.g         # Header for `get_time.cpp`
+│       ├── logger.h           # Header for `logger.cpp`
+│       └── serialization.h    # Header for `serialization.cpp`
+├── src/                       # Main source code
+│   ├── audio/                 # Audio device-related modules
+│   │   └── audio_device.cpp   # Implementation of audio device handling
+│   ├── config/                # Configuration-related modules
+│   │   └── app_config.cpp     # Implementation of application configuration
 │   ├── gui/                   # User interface modules
 │   │   ├── exit_menu.cpp      # Implementation of the exit menu
-│   │   ├── exit_menu.h        # Header for `exit_menu.cpp`
 │   │   ├── gui_utils.cpp      # Utility functions for GUI
-│   │   ├── gui_utils.h        # Header for `gui_utils.cpp`
 │   │   ├── main_menu.cpp      # Implementation of the main menu
-│   │   ├── main_menu.h        # Header for `main_menu.cpp`
 │   │   ├── receive_menu.cpp   # Implementation of the receive menu
-│   │   ├── receive_menu.h     # Header for `receive_menu.cpp`
 │   │   ├── setup_menu.cpp     # Implementation of the setup menu
-│   │   ├── setup_menu.h       # Header for `setup_menu.cpp`
-│   │   ├── transmit_menu.cpp  # Implementation of the transmit menu
-│   │   └── transmit_menu.h    # Header for `transmit_menu.cpp`
+│   │   └── transmit_menu.cpp  # Implementation of the transmit menu
 │   ├── logic/                 # Application logic
 │   │   ├── receiver.cpp       # Implementation of the receiver logic
 │   │   └── transmitter.cpp    # Implementation of the transmitter logic
 │   ├── utils/                 # General utility functions
-│   │   ├── fft.cpp            # Implementation of FFT fuctions.
-│   │   ├── fft.h              # Header for `fft.cpp`
-│   │   ├── serialization.cpp  # Implementation of Serialization functions
-│   │   └── serialization.h    # Header for `serialization.cpp`
+│   │   ├── fft.cpp            # Implementation of FFT fuctions
+│   │   ├── get_time.cpp       # Implementation of get time functions
+│   │   ├── logger.cpp         # Implementation of logger fuctions
+│   │   └── serialization.cpp  # Implementation of Serialization functions
 │   └── main.cpp               # Program entry point
 ├── CMakeLists.txt             # CMake build configuration
 ├── LICENSE                    # LICENSE file

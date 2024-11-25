@@ -1,3 +1,6 @@
+// Copyright (c) 2024 Luca-G49
+// Distribuited under the MIT License. See the LICENSE file for more details.
+
 #include "setup_menu.h"
 #include "gui_utils.h"
 #include "app_config.h"

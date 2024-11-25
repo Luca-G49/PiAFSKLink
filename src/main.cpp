@@ -1,3 +1,6 @@
+// Copyright (c) 2024 Luca-G49
+// Distribuited under the MIT License. See the LICENSE file for more details.
+
 #include "main_menu.h"
 #include "exit_menu.h"
 #include "gui_utils.h"

@@ -73,7 +73,7 @@ These tasks make it easier to build and manage the project directly from within 
 PiAFSKLink/
 ├── build/                     # Build directory
 ├── include/                   # Project header files
-├── audio/                     # Audio device-related modules
+│   ├── audio/                 # Audio device-related modules
 │   │   └── audio_device.h     # Header for `audio_device.cpp`
 │   ├── config/                # Configuration-related modules
 │   │   └── app_config.h       # Header for `audio_device.cpp`

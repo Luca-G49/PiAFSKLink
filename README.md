@@ -3,34 +3,39 @@
 ![Version](https://img.shields.io/github/v/release/LUCA-G49/PiAFSKLink?include_prereleases) ![Milestone Progress](https://img.shields.io/github/milestones/progress-percent/LUCA-G49/PiAFSKLink/1) ![Open Issues](https://img.shields.io/github/issues/LUCA-G49/PiAFSKLink) ![License](https://img.shields.io/github/license/Luca-G49/PiAFSKLink?label=License)
 
 
-PiAFSKLink is a project that uses a Raspberry Pi to transmit and receive AFSK (Audio Frequency Shift Keying) signals. The project is designed for digital radio communication, allowing users to send and receive data over radio frequencies using AFSK modulation.
+**PiAFSKLink** is designed to transmitting and receiving AFSK (Audio Frequency Shift Keying) signals. It enables digital communication by modulating and demodulating audio signals.
 
-## Features
-
-- Use a Raspberry Pi to handle AFSK modulation and demodulation.
+The project has been developed and tested on a Raspberry Pi 4 with Raspbian OS but is designed to work on any Linux system that supports the required libraries. 
 
 ## How It Works
 
-PiAFSKLink operates by modulating and demodulating data into audio signals using AFSK. The Raspberry Pi handles the entire process, allowing you to interface with any radio device capable of transmitting and receiving audio signals (such as a transceiver with audio input and output).
+PiAFSKLink works by encoding and decoding digital data as AFSK audio signals, enabling communication via radio frequencies. It provides two primary functionalities:
 
 ### 1. **Transmission (AFSK Modulation)**
 
-- The software takes digital data (e.g., text or binary information) and converts it into AFSK-modulated audio signals.
-- These audio signals are then transmitted via the audio output of the Raspberry Pi.
-- The frequency shifts in the audio correspond to the different binary states of the transmitted data.
+- Converts digital data (e.g., text or binary information) into AFSK-modulated audio signals.
+- Transmits signals through the audio output of the system.
 
 ### 2. **Reception (AFSK Demodulation)**
 
-- The Raspberry Pi uses its audio input to capture the incoming AFSK signals.
-- The software then demodulates the audio signal back into digital data, extracting the transmitted information.
-- This data can be displayed on the Raspberry Pi or sent to another system for further processing.
+- Captures incoming AFSK-modulated audio signals via the system’s audio input.
+- Decodes the audio signals into digital data.
 
 ## Requirements
 
-- **Raspberry Pi** (with Raspbian OS)
+### Hardware
+
+- A Linux-based system (e.g., Raspberry Pi 4) with:
+    - Audio input (e.g., microphone or line-in).
+    - Audio output (e.g., headphones or speaker out).
+- A radio device capable of transmitting/receiving audio signals (e.g., transceiver).
+
+### Software
+
 - **C++17 or later** for compiling the code.
 - **ALSA** (Advanced Linux Sound Architecture) library for audio playback and capture.
 - **FFTW** (Fast Fourier Transform) library.
+- **spdlog** for logging.
 
 ### Software Dependencies
 
@@ -46,6 +51,13 @@ To install FFTW development libraries:
 ```bash
 sudo apt-get update
 sudo apt-get install libfftw3-dev
+```
+
+To install spdlog:
+
+```bash
+sudo apt-get update
+sudo apt-get install libspdlog-dev
 ```
 
 ## Build Instructions
@@ -117,3 +129,11 @@ PiAFSKLink/
 ├── LICENSE                    # LICENSE file
 └── README.md                  # Project documentation
 ```
+
+## Feedback and Suggestions
+
+Feedbacks and suggestions are welcome! Feel free to share here in the [Discussions area](https://github.com/LUCA-G49/PiAFSKLink/discussions).
+
+## License
+
+This project is licensed under the MIT License. See the [License](LICENSE) file for details.

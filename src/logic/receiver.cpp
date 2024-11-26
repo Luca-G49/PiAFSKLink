@@ -54,7 +54,7 @@ void receiver_thread(std::atomic<bool>& running) {
 
     // Initialize the audio device for capture
     if (!audio.init(config.sample_rate, true)) {
-        Logger::getLogger()->error("Failed to initialize audio device for capture!");
+        Logger::getLogger()->error("Failed to initialize audio device for capture! Receiver thread will terminate.");
         return;
     }
 
@@ -65,8 +65,8 @@ void receiver_thread(std::atomic<bool>& running) {
 
         // Capture samples and check for the start tone
         if (!audio.capture(captured_samples, samples_per_bit)) {
-            Logger::getLogger()->error("Audio capture failed!");
-            continue; // Go back to looking for the start tone
+            Logger::getLogger()->error("Audio capture failed! Receiver thread will terminate.");
+            return;
         }
 
         // Detect the start tone
@@ -80,14 +80,14 @@ void receiver_thread(std::atomic<bool>& running) {
             // Start decoding the bits
             while (running.load()) {
                 if (!audio.capture(captured_samples, samples_per_bit)) {
-                    Logger::getLogger()->error("Failed to capture samples!");
-                    break; // Exit decoding and look for a new message
+                    Logger::getLogger()->error("Failed to capture samples! Receiver thread will terminate.");
+                    return;
                 }
 
                 // Check if the samples are sufficient
                 if (captured_samples.size() < samples_per_bit) {
-                    Logger::getLogger()->error("Insufficient captured samples!");
-                    break; // Exit decoding and look for a new message
+                    Logger::getLogger()->error("Insufficient captured samples! Receiver thread will terminate.");
+                    return;
                 }
 
                 // Detect bit tones

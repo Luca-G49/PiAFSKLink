@@ -24,16 +24,10 @@ void receive_menu()
         // Copy messages from receiver buffer to view buffer
         {
             std::lock_guard<std::mutex> lock(bufferMutex);
-            if (receivedMessages.empty())
+            while (!receivedMessages.empty())
             {
-                viewMessages.clear();
-            }
-            else {
-                while (!receivedMessages.empty())
-                {
-                    viewMessages.push_back(receivedMessages.front());
-                    receivedMessages.pop_front();
-                }
+                viewMessages.push_back(receivedMessages.front());
+                receivedMessages.pop_front();
             }
         }
 

@@ -4,6 +4,7 @@
 #include "setup_menu.h"
 #include "gui_utils.h"
 #include "app_config.h"
+#include "receiver.h"
 #include <iostream>
 #include <string>
 #include <thread>
@@ -32,7 +33,8 @@ void setup_menu()
         std::cout << "| 8. Tone end deadline                            |\n";
         std::cout << "| 9. View current setup                           |\n";
         std::cout << "| 10. Restore default setup                       |\n";
-        std::cout << "| 11. Return to main menu                         |\n";
+        std::cout << "| 11. Delete received messages                    |\n";
+        std::cout << "| 12. Return to main menu                         |\n";
         std::cout << "+-------------------------------------------------+\n";
         std::cout << "> Enter your choice: ";
 
@@ -40,7 +42,7 @@ void setup_menu()
         std::cin >> choice;
 
         // Check for valid input
-        if (std::cin.fail() || choice < 1 || choice > 11)
+        if (std::cin.fail() || choice < 1 || choice > 12)
         {
             // Clear cin buffer, ignore and continue
             std::cin.clear();
@@ -255,13 +257,30 @@ void setup_menu()
             {
                 config.resetToDefault();
                 std::cout << "\033[1;32mDefault setup restored \033[0m" << std::endl;
+                std::this_thread::sleep_for(std::chrono::seconds(2));
             }
 
-            std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         }
 
         case 11:
+        {
+            // Delete received messages
+            std::cout << "Are you sure [Y] [N]" << std::endl;
+            char confirm;
+            std::cin >> confirm;
+
+            if (confirm == 'y' || confirm == 'Y')
+            {
+                
+                std::cout << "\033[1;32mReceived messages deleted \033[0m" << std::endl;
+                std::this_thread::sleep_for(std::chrono::seconds(2));
+            }
+
+            break;
+        }
+
+        case 12:
         {
             menuExit = true;
             break;

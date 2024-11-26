@@ -18,6 +18,9 @@ bool detect_end_tone(const std::vector<short> &samples, unsigned int sample_rate
 // Function to detect the bit tone (for both 1 and 0)
 bool detect_bit_tone(const std::vector<short> &samples, unsigned int sample_rate);
 
+// Clear received messages buffer
+void clear_received_messages();
+
 // Simulated receiver thread
 void receiver_thread_sim(std::atomic<bool> &running);
 

@@ -15,16 +15,25 @@
 std::deque<std::string> viewMessages;
 
 // Receive menu
-void receive_menu() {
+void receive_menu()
+{
     bool menuExit = false;
 
-    while (!menuExit) {
+    while (!menuExit)
+    {
         // Copy messages from receiver buffer to view buffer
         {
             std::lock_guard<std::mutex> lock(bufferMutex);
-            while (!receivedMessages.empty()) {
-                viewMessages.push_back(receivedMessages.front());
-				receivedMessages.pop_front();
+            if (receivedMessages.empty())
+            {
+                viewMessages.clear();
+            }
+            else {
+                while (!receivedMessages.empty())
+                {
+                    viewMessages.push_back(receivedMessages.front());
+                    receivedMessages.pop_front();
+                }
             }
         }
 
@@ -35,11 +44,15 @@ void receive_menu() {
         std::cout << "| " << std::setw(48) << std::left << "[R] Refresh messages   [Q] Return to main menu" << "|\n";
         std::cout << "+-------------------------------------------------+\n\n";
 
-        if (!viewMessages.empty()) {
-            for (const auto& msg : viewMessages) {
+        if (!viewMessages.empty())
+        {
+            for (const auto &msg : viewMessages)
+            {
                 std::cout << "> " << std::setw(48) << std::left << msg << "\n\n";
             }
-        } else {
+        }
+        else
+        {
             std::cout << "> " << std::setw(48) << std::left << "No new messages." << "\n";
         }
 
@@ -48,7 +61,8 @@ void receive_menu() {
         char choice;
         std::cin >> choice;
 
-        if (choice == 'q' || choice == 'Q') {
+        if (choice == 'q' || choice == 'Q')
+        {
             menuExit = true;
         }
     }

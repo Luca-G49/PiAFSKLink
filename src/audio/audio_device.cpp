@@ -140,3 +140,13 @@ void AudioDevice::cleanup()
         handle = nullptr;
     }
 }
+
+// Drop funtion
+void AudioDevice::drop()
+{
+    if (handle)
+    {
+        snd_pcm_drop(handle);
+        handle = nullptr;
+    }
+}

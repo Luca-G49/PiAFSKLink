@@ -62,8 +62,6 @@ void receiver_thread(std::atomic<bool>& running) {
     size_t samples_per_bit = config.sample_rate * (config.tone_duration / 1e6);
 
     while (running.load()) {
-        // Detect start tone
-        //std::cout << "Waiting for start tone..." << std::endl;
 
         // Capture samples and check for the start tone
         if (!audio.capture(captured_samples, samples_per_bit)) {
@@ -122,8 +120,8 @@ void receiver_thread(std::atomic<bool>& running) {
         }
     }
 
-    // Clean up the audio device
+    // Drop and clean up the audio device
+    audio.drop();
     audio.cleanup();
-
-    //std::cout << "Receiver thread terminated." << std::endl;
+    
 }

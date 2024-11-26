@@ -25,6 +25,9 @@ public:
     // Clean up and close the audio device
     void cleanup();
 
+    // Drop audio device
+    void drop();
+
 private:
     snd_pcm_t* handle;        // ALSA device handle
     unsigned int sample_rate; // Sampling rate in Hz

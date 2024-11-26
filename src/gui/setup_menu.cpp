@@ -209,15 +209,15 @@ void setup_menu()
         case 8:
         {
             // Change tone for tone end deadline
-            double inputToneBit1{};
+            double inputToneEndDeadline{};
 
             std::cout << "Enter new tone end deadline (s): ";
-            std::cin >> inputToneBit1;
+            std::cin >> inputToneEndDeadline;
 
-            if (!std::cin.fail() && inputToneBit1 > 0)
+            if (!std::cin.fail() && inputToneEndDeadline > 0)
             {
-                config.tone_1 = inputToneBit1;
-                std::cout << "\033[1;32mDeadline for tone end set to \033[0m" << config.tone_1 << "\033[1;32m s\033[0m" << std::endl;
+                config.tone_end_deadline = inputToneEndDeadline;
+                std::cout << "\033[1;32mDeadline for tone end set to \033[0m" << config.tone_end_deadline << "\033[1;32m s\033[0m" << std::endl;
             }
             else
             {

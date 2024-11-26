@@ -8,13 +8,7 @@
 #include <cmath>
 #include <algorithm>
 
-/**
- * Compute the FFT of the given samples and return the magnitude spectrum.
- * 
- * @param samples Input signal samples (time domain).
- * @param sample_rate Sampling rate of the input signal.
- * @return Vector containing magnitudes of the frequency spectrum.
- */
+// Compute the FFT of the given samples and return the magnitude spectrum.
 std::vector<double> compute_fft(const std::vector<double>& samples, int sample_rate) {
     int n = samples.size(); // Number of samples
     std::vector<double> magnitudes(n / 2); // Magnitudes of frequencies
@@ -48,16 +42,7 @@ std::vector<double> compute_fft(const std::vector<double>& samples, int sample_r
     return magnitudes;
 }
 
-/**
- * Function to find the dominant frequency in the FFT data
- * 
- * This function analyzes the magnitude spectrum obtained from the FFT to determine
- * the frequency with the highest magnitude, which is considered the dominant frequency.
- *
- * @param magnitudes A vector containing the magnitudes of the frequency bins from the FFT.
- * @param sample_rate The sampling rate of the input signal.
- * @return The dominant frequency in Hz.
- */
+// Function to find the dominant frequency in the FFT data
 double find_dominant_frequency(const std::vector<double>& magnitudes, int sample_rate) {
     // Find the index of the maximum magnitude
     auto max_iter = std::max_element(magnitudes.begin(), magnitudes.end());

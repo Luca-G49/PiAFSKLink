@@ -20,6 +20,7 @@ std::vector<short> generate_tone_samples(double frequency, double volume, int du
     return samples;
 }
 
+// Transmit function
 void transmit(const std::string& input_bits) {
     Config::AppConfig& config = Config::get();
     AudioDevice audio;

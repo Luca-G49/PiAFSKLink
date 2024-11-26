@@ -5,6 +5,7 @@
 #include <chrono>
 #include <iomanip>
 
+// Retrieves the current system time formatted as a string.
 std::string getCurrentTime() {
     // Get the current time as a time_point
     auto now = std::chrono::system_clock::now();

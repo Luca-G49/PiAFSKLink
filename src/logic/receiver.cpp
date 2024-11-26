@@ -45,7 +45,7 @@ void clear_received_messages()
     receivedMessages.clear();
 }
 
-// Simulated receiver thread
+// Simulated receiver thread function
 void receiver_thread_sim(std::atomic<bool> &running)
 {
     int counter = 0; // Simulate receive counter
@@ -57,6 +57,7 @@ void receiver_thread_sim(std::atomic<bool> &running)
     }
 }
 
+// Receiver thread function
 void receiver_thread(std::atomic<bool> &running)
 {
     AudioDevice audio;

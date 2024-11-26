@@ -7,6 +7,8 @@
 // Definition of the static logger
 std::shared_ptr<spdlog::logger> Logger::logger = nullptr;
 
+
+// Initializes the logger and sets up the logging system.
 void Logger::init()
 {
     if (logger)
@@ -33,6 +35,7 @@ void Logger::init()
     }
 }
 
+// Retrieves the initialized logger instance.
 std::shared_ptr<spdlog::logger> &Logger::getLogger()
 {
     if (!logger)

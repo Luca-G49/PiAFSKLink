@@ -5,13 +5,16 @@
 #include "logger.h"
 #include <iostream>
 
+// Constructor
 AudioDevice::AudioDevice() : handle(nullptr), sample_rate(0), is_capture(false) {}
 
+// Destructor
 AudioDevice::~AudioDevice()
 {
     cleanup();
 }
 
+// Initializes the audio device for capture or playback.
 bool AudioDevice::init(unsigned int sample_rate, bool is_capture)
 {
     this->sample_rate = sample_rate;
@@ -31,6 +34,7 @@ bool AudioDevice::init(unsigned int sample_rate, bool is_capture)
     return configure_device();
 }
 
+// Configures the audio device's hardware parameters.
 bool AudioDevice::configure_device()
 {
     snd_pcm_hw_params_t *params;
@@ -81,7 +85,7 @@ bool AudioDevice::configure_device()
     return true;
 }
 
-// Playback function
+// Plays back audio samples to the device.
 bool AudioDevice::playback(const std::vector<short> &samples)
 {
     int frames = samples.size();
@@ -114,7 +118,7 @@ bool AudioDevice::playback(const std::vector<short> &samples)
     return true;
 }
 
-// Capture function
+// Captures audio samples from the device.
 bool AudioDevice::capture(std::vector<short> &buffer, size_t frames)
 {
     buffer.resize(frames);
@@ -130,7 +134,7 @@ bool AudioDevice::capture(std::vector<short> &buffer, size_t frames)
     return true;
 }
 
-// Cleanup funtion
+// Cleans up resources and closes the audio device.
 void AudioDevice::cleanup()
 {
     if (handle)
@@ -141,7 +145,7 @@ void AudioDevice::cleanup()
     }
 }
 
-// Drop funtion
+// Drops the current audio device connection.
 void AudioDevice::drop()
 {
     if (handle)

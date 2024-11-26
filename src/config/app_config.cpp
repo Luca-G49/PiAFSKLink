@@ -5,13 +5,13 @@
 
 namespace Config {
 
-// Global configuration
+// Retrieves the global configuration instance.
 AppConfig& get() {
     static AppConfig instance;
     return instance;
 }
 
-// Reset default configuration
+// Resets the configuration to its default values.
 void AppConfig::resetToDefault() {
     appName = "PiAFSKLink";
     sample_rate = 44100;          // Sample rate in Hz

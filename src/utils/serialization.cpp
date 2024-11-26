@@ -5,7 +5,7 @@
 #include "logger.h"
 #include <bitset>
 
-// Function to serialize a string into a vector of bits (bools)
+// Serializes a string into a vector of bits (represented as booleans).
 std::vector<bool> serializeString(const std::string& str) {
     std::vector<bool> bitVector;
 
@@ -21,7 +21,7 @@ std::vector<bool> serializeString(const std::string& str) {
     return bitVector;
 }
 
-// Deserialize a vector of bits back into a string
+// Deserializes a vector of bits back into a string.
 std::string deserializeBitVector(const std::vector<bool>& bitVector) {
     std::string str = ""; 
     char currentChar = 0;      
@@ -43,7 +43,7 @@ std::string deserializeBitVector(const std::vector<bool>& bitVector) {
     return str;
 }
 
-// Convert a string into its binary representation (a string of bits)
+// Converts a string into its binary representation.
 std::string stringToBits(const std::string& str) {
     std::string bits = "";
     
@@ -56,7 +56,7 @@ std::string stringToBits(const std::string& str) {
     return bits;
 }
 
-// Convert a binary string (bits) back into the original string
+// Converts a binary string (bits) back into the original string.
 std::string bitsToString(const std::string& bits) {
     std::string str = "";
     

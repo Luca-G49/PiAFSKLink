@@ -23,11 +23,15 @@ void transmit_menu()
     std::cout << "| Enter message (type [Q] to return):             |\n";
     std::cout << "+-------------------------------------------------+\n";
 
+    // Clear any residual characters in the input buffer
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
     while (!menuExit)
     {
         // Get message from user
         std::cout << "> ";
         std::string message;
+
         std::getline(std::cin, message);
 
         if (message == "q" || message == "Q")

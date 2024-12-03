@@ -71,6 +71,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -89,10 +91,12 @@ void setup_menu()
             if (!std::cin.fail() && inputVolume >= 0.0 && inputVolume <= 1.0)
             {
                 config.volume = inputVolume;
-                std::cout << "\033[1;32mVolume set to \033[0m" << config.volume << "\033[1;32m %\033[0m" << std::endl;
+                std::cout << "\033[1;32mVolume set to \033[0m" << config.volume << std::endl;
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -115,6 +119,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -137,6 +143,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -159,6 +167,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -181,6 +191,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -203,6 +215,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -225,6 +239,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -247,6 +263,8 @@ void setup_menu()
             }
             else
             {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
             }
 
@@ -258,12 +276,8 @@ void setup_menu()
         {
             // Message encryption key
             std::string inputEncryptionKey{};
-
-            std::cout << "Enter new message encryption key (32 bytes for AES-256): ";
-
-            // Clear any residual characters in the input buffer
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            
+            std::cout << "Enter new message encryption key (32 bytes for AES-256): ";
             std::getline(std::cin, inputEncryptionKey);
 
             if (!std::cin.fail() && (inputEncryptionKey.size() == 32))
@@ -284,7 +298,7 @@ void setup_menu()
         {
             // View current setup
             std::cout << "\033[1;32mSample rate: \033[0m" << config.sample_rate << "\033[1;32m Hz\033[0m" << std::endl;
-            std::cout << "\033[1;32mVolume: \033[0m" << config.volume << "\033[1;32m %\033[0m" << std::endl;
+            std::cout << "\033[1;32mVolume: \033[0m" << config.volume << std::endl;
             std::cout << "\033[1;32mTone duration: \033[0m" << config.tone_duration << "\033[1;32m us\033[0m" << std::endl;
             std::cout << "\033[1;32mTone for bit0: \033[0m" << config.tone_0 << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mTone for bit1: \033[0m" << config.tone_1 << "\033[1;32m Hz\033[0m" << std::endl;

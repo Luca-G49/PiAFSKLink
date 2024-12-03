@@ -21,6 +21,20 @@ PiAFSKLink works by encoding and decoding digital data as AFSK audio signals, en
 - Captures incoming AFSK-modulated audio signals via the system’s audio input.
 - Decodes the audio signals into digital data.
 
+## Cryptography Support for Messages
+
+PiAFSKLink includes optional message encryption to enhance the security of transmitted data. When encryption is enabled, messages are secured using the **AES-256-CBC** algorithm.
+
+### Encryption Process:
+
+1. **Encryption during Transmission**:
+   - The message is encrypted with a 256-bit key using the AES-256-CBC algorithm.
+   - A randomly generated Initialization Vector (IV) is prepended to the encrypted message for secure decryption.
+
+2. **Decryption during Reception**:
+   - The receiver extracts the IV from the incoming message.
+   - The message is decrypted using the provided 256-bit key and the extracted IV.
+
 ## Requirements
 
 ### Hardware
@@ -36,6 +50,7 @@ PiAFSKLink works by encoding and decoding digital data as AFSK audio signals, en
 - **ALSA** (Advanced Linux Sound Architecture) library for audio playback and capture.
 - **FFTW** (Fast Fourier Transform) library.
 - **spdlog** for logging.
+- **OpenSSL** for cryptography.
 
 ### Software Dependencies
 
@@ -58,6 +73,13 @@ To install spdlog:
 ```bash
 sudo apt-get update
 sudo apt-get install libspdlog-dev
+```
+
+To install OpenSSL:
+
+```bash
+sudo apt-get update
+sudo apt-get install libssl-dev
 ```
 
 ## Build Instructions
@@ -100,6 +122,7 @@ PiAFSKLink/
 │   │   ├── receiver.h         # Header for `receiver.cpp`
 │   │   └── transmitter.h      # Header for `transmitter.cpp`
 │   └── utils/                 # General utility functions
+│       ├── encryption.h        # Header for `encryption.cpp`
 │       ├── fft.h              # Header for `fft.cpp`
 │       ├── get_time.g         # Header for `get_time.cpp`
 │       ├── logger.h           # Header for `logger.cpp`
@@ -120,6 +143,7 @@ PiAFSKLink/
 │   │   ├── receiver.cpp       # Implementation of the receiver logic
 │   │   └── transmitter.cpp    # Implementation of the transmitter logic
 │   ├── utils/                 # General utility functions
+│   │   ├── encryption.cpp     # Implementation of encryption fuctions
 │   │   ├── fft.cpp            # Implementation of FFT fuctions
 │   │   ├── get_time.cpp       # Implementation of get time functions
 │   │   ├── logger.cpp         # Implementation of logger fuctions

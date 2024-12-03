@@ -37,11 +37,16 @@ target_include_directories(PiAFSKLink PUBLIC
 # Link spdlog library
 find_package(spdlog REQUIRED)
 
+# Link OpenSSL library
+find_package(OpenSSL REQUIRED)
+
 # Link necessary libraries: spdlog, ALSA, and FFTW3
 target_link_libraries(PiAFSKLink PRIVATE
     spdlog::spdlog
     asound
     fftw3
+    OpenSSL::Crypto
+    OpenSSL::SSL
 )
 
 # Set additional compile options (optional but recommended)

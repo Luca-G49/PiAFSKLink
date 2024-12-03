@@ -26,7 +26,7 @@ bool AudioDevice::init(unsigned int sample_rate, bool is_capture)
     // Open the ALSA device
     if (snd_pcm_open(&handle, device, mode, 0) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to open audio device.");
+        Logger::getLogger()->error("Unable to open audio device.");
         return false;
     }
 
@@ -43,42 +43,42 @@ bool AudioDevice::configure_device()
     // Set the device parameters
     if (snd_pcm_hw_params_any(handle, params) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to configure hardware parameters.");
+        Logger::getLogger()->error("Unable to configure hardware parameters.");
         return false;
     }
 
     // Set access type
     if (snd_pcm_hw_params_set_access(handle, params, SND_PCM_ACCESS_RW_INTERLEAVED) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to set interleaved access.");
+        Logger::getLogger()->error("Unable to set interleaved access.");
         return false;
     }
 
     // Set the audio format
     if (snd_pcm_hw_params_set_format(handle, params, SND_PCM_FORMAT_S16_LE) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to set audio format.");
+        Logger::getLogger()->error("Unable to set audio format.");
         return false;
     }
 
     // Set the number of channels (Mono)
     if (snd_pcm_hw_params_set_channels(handle, params, 1) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to set channel count.");
+        Logger::getLogger()->error("Unable to set channel count.");
         return false;
     }
 
     // Set the sample rate
     if (snd_pcm_hw_params_set_rate_near(handle, params, &sample_rate, nullptr) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to set sample rate..");
+        Logger::getLogger()->error("Unable to set sample rate..");
         return false;
     }
 
     // Apply the hardware parameters
     if (snd_pcm_hw_params(handle, params) < 0)
     {
-        Logger::getLogger()->error("Error: Unable to apply hardware parameters.");
+        Logger::getLogger()->error("Unable to apply hardware parameters.");
         return false;
     }
 

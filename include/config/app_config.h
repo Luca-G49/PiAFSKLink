@@ -13,7 +13,7 @@ namespace Config
     // Global configuration
     struct AppConfig
     {
-        std::string appName = "PiAFSKLink";
+        std::string appName = "PiAFSKLink"; // Application name
         int sample_rate = 44100;    // Sample rate in Hz
         double volume = 0.5;        // Playback volume level (0.0 - 1.0)
         int tone_duration = 20000;  // Duration of each tone in microseconds
@@ -22,6 +22,8 @@ namespace Config
         double tone_start = 500.0;  // Tone frequency for start bit sequence in Hz
         double tone_end = 1000.0;   // Tone frequency for stop bit sequence in Hz
         int tone_end_deadline = 10; // Tone end deadline from tone start in seconds
+        int enable_encryption = 1;  // 0=Encryption disabled, 1=Encryption enabled
+        std::string encryption_key = "01234567890123456789012345678901"; // Encryption key
 
         /**
          * Resets the configuration to its default values.

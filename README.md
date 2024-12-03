@@ -21,7 +21,7 @@ PiAFSKLink works by encoding and decoding digital data as AFSK audio signals, en
 - Captures incoming AFSK-modulated audio signals via the system’s audio input.
 - Decodes the audio signals into digital data.
 
-## Cryptography Support for Messages
+## Message Encryption
 
 PiAFSKLink includes optional message encryption to enhance the security of transmitted data. When encryption is enabled, messages are secured using the **AES-256-CBC** algorithm.
 

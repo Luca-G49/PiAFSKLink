@@ -22,7 +22,7 @@ void AppConfig::resetToDefault() {
     tone_start = 200.0;           // Tone frequency for start bit sequence in Hz
     tone_end = 500.0;             // Tone frequency for stop bit sequence in Hz
     tone_end_deadline = 10;       // Tone end deadline from tone start in seconds
-    enable_encryption = 1;        // 0=Encryption disabled, 1=Encryption enabled
+    enable_encryption = true;     // Message encryption enabling
     encryption_key = "01234567890123456789012345678901"; // Encryption key
 }
 

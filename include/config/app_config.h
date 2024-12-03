@@ -22,7 +22,7 @@ namespace Config
         double tone_start = 500.0;  // Tone frequency for start bit sequence in Hz
         double tone_end = 1000.0;   // Tone frequency for stop bit sequence in Hz
         int tone_end_deadline = 10; // Tone end deadline from tone start in seconds
-        int enable_encryption = 1;  // 0=Encryption disabled, 1=Encryption enabled
+        bool enable_encryption = true;  // Message encryption enabling
         std::string encryption_key = "01234567890123456789012345678901"; // Encryption key
 
         /**

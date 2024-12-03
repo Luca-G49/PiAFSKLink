@@ -132,10 +132,8 @@ void receiver_thread(std::atomic<bool> &running)
                         {
                             std::string decrypted_message;
 
-                            std::string encryption_key = "01234567890223456789012345678901";
-
                             // Decrypt the message
-                            if (decrypt_message(bitsToString(binary_sequence), encryption_key, decrypted_message) != 0)
+                            if (decrypt_message(bitsToString(binary_sequence), config.encryption_key, decrypted_message) != 0)
                             {
                                 Logger::getLogger()->error("Failed to decrypt the message.");
                                 break;

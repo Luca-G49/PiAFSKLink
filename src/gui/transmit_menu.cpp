@@ -39,7 +39,6 @@ void transmit_menu()
             // Check that message is not empty
             if (!message.empty())
             {
-
                 // Get App configuration
                 Config::AppConfig &config = Config::get();
 

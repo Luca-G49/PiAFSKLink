@@ -9,7 +9,7 @@
 std::string generateIV() {
     unsigned char iv[16]; // 16 bytes for AES-256-CBC (128-bit IV)
     if (!RAND_bytes(iv, 16)) { // Generate random bytes
-        Logger::getLogger()->error("Error: Unable to generate IV.");
+        Logger::getLogger()->error("Unable to generate IV.");
         return "";
     }
     // Return the IV as a string
@@ -20,18 +20,18 @@ std::string generateIV() {
 int encrypt(const std::string& plaintext, const std::string& key, const std::string& iv, std::string& ciphertext) {
     
     if (key.size() != 32) {
-        Logger::getLogger()->error("Error: Key size must be 32 bytes for AES-256");
+        Logger::getLogger()->error("Key size must be 32 bytes for AES-256");
         return -1;
     }
     if (iv.size() != 16) {
-        Logger::getLogger()->error("Error: IV size must be 16 bytes for AES");
+        Logger::getLogger()->error("IV size must be 16 bytes for AES");
         return -1;
     }
     
     // Create a new encryption context
     EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();
     if (!ctx) {
-        Logger::getLogger()->error("Error: Failed to create encryption context");
+        Logger::getLogger()->error("Failed to create encryption context");
         return -1;
     }
 
@@ -40,7 +40,7 @@ int encrypt(const std::string& plaintext, const std::string& key, const std::str
                            reinterpret_cast<const unsigned char*>(key.c_str()),
                            reinterpret_cast<const unsigned char*>(iv.c_str())) != 1) {
 
-        Logger::getLogger()->error("Error: Failed to initialize encryption operation");
+        Logger::getLogger()->error("Failed to initialize encryption operation");
         EVP_CIPHER_CTX_free(ctx);
         return -1;
     }
@@ -52,7 +52,7 @@ int encrypt(const std::string& plaintext, const std::string& key, const std::str
     // Encrypt the plaintext
     if (EVP_EncryptUpdate(ctx, reinterpret_cast<unsigned char*>(&tmp_ciphertext[0]), &len,
                           reinterpret_cast<const unsigned char*>(plaintext.c_str()), plaintext.size()) != 1) {
-        Logger::getLogger()->error("Error: Failed to encrypt plaintext");
+        Logger::getLogger()->error("Failed to encrypt plaintext");
         EVP_CIPHER_CTX_free(ctx);
         return -1;
     }
@@ -60,7 +60,7 @@ int encrypt(const std::string& plaintext, const std::string& key, const std::str
 
     // Finalize encryption and handle padding
     if (EVP_EncryptFinal_ex(ctx, reinterpret_cast<unsigned char*>(&tmp_ciphertext[0]) + len, &len) != 1) {
-        Logger::getLogger()->error("Error: Failed to finalize encryption");
+        Logger::getLogger()->error("Failed to finalize encryption");
         EVP_CIPHER_CTX_free(ctx);
         return -1;
     }
@@ -78,18 +78,18 @@ int encrypt(const std::string& plaintext, const std::string& key, const std::str
 int decrypt(const std::string& ciphertext, const std::string& key, const std::string& iv, std::string& plaintext) {
     
     if (key.size() != 32) {
-        Logger::getLogger()->error("Error: Key size must be 32 bytes for AES-256");
+        Logger::getLogger()->error("Key size must be 32 bytes for AES-256");
         return -1;
     }
     if (iv.size() != 16) {
-        Logger::getLogger()->error("Error: IV size must be 16 bytes for AES");
+        Logger::getLogger()->error("IV size must be 16 bytes for AES");
         return -1;
     }
     
     // Create a new decryption context
     EVP_CIPHER_CTX* ctx = EVP_CIPHER_CTX_new();
     if (!ctx) {
-        Logger::getLogger()->error("Error: Failed to create decryption context");
+        Logger::getLogger()->error("Failed to create decryption context");
         return -1;
     }
 
@@ -97,7 +97,7 @@ int decrypt(const std::string& ciphertext, const std::string& key, const std::st
     if (EVP_DecryptInit_ex(ctx, EVP_aes_256_cbc(), NULL,
                            reinterpret_cast<const unsigned char*>(key.c_str()),
                            reinterpret_cast<const unsigned char*>(iv.c_str())) != 1) {
-        Logger::getLogger()->error("Error: Failed to initialize decryption operation");
+        Logger::getLogger()->error("Failed to initialize decryption operation");
         EVP_CIPHER_CTX_free(ctx);
         return -1;
     }
@@ -109,7 +109,7 @@ int decrypt(const std::string& ciphertext, const std::string& key, const std::st
     // Decrypt the ciphertext
     if (EVP_DecryptUpdate(ctx, reinterpret_cast<unsigned char*>(&tmp_plaintext[0]), &len,
                           reinterpret_cast<const unsigned char*>(ciphertext.c_str()), ciphertext.size()) != 1) {
-        Logger::getLogger()->error("Error: Failed to decrypt ciphertext");
+        Logger::getLogger()->error("Failed to decrypt ciphertext");
         EVP_CIPHER_CTX_free(ctx);
         return -1;
     }
@@ -117,7 +117,7 @@ int decrypt(const std::string& ciphertext, const std::string& key, const std::st
 
     // Finalize decryption and handle padding removal
     if (EVP_DecryptFinal_ex(ctx, reinterpret_cast<unsigned char*>(&tmp_plaintext[0]) + len, &len) != 1) {
-        Logger::getLogger()->error("Error: Failed to finalize decryption");
+        Logger::getLogger()->error("Failed to finalize decryption");
         EVP_CIPHER_CTX_free(ctx);
         return -1;
     }
@@ -154,7 +154,7 @@ int encrypt_message(const std::string& plaintext, const std::string& key, std::s
 int decrypt_message(const std::string& ciphertext_with_iv, const std::string& key, std::string& result) {
 
     if (ciphertext_with_iv.size() < 16) {
-        Logger::getLogger()->error("Error: Ciphertext is too short to contain an IV");
+        Logger::getLogger()->error("Ciphertext is too short to contain an IV");
         return -1;
     }
 

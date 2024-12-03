@@ -8,6 +8,7 @@
 #include "fft.h"
 #include "logger.h"
 #include "get_time.h"
+#include "encryption.h"
 #include <fftw3.h>
 #include <vector>
 #include <cmath>
@@ -125,7 +126,29 @@ void receiver_thread(std::atomic<bool> &running)
                     // Insert the message into the buffer
                     {
                         std::lock_guard<std::mutex> lock(bufferMutex);
-                        receivedMessages.push_back("[" + getCurrentTime() + "] : " + bitsToString(binary_sequence));
+
+                        // Decrypt the message if encryption is enabled
+                        if (config.enable_encryption)
+                        {
+                            std::string decrypted_message;
+
+                            std::string encryption_key = "01234567890223456789012345678901";
+
+                            // Decrypt the message
+                            if (decrypt_message(bitsToString(binary_sequence), encryption_key, decrypted_message) != 0)
+                            {
+                                Logger::getLogger()->error("Failed to decrypt the message.");
+                                break;
+                            }
+                            
+                            // Add decrypted message to received messages buffer
+                            receivedMessages.push_back("[" + getCurrentTime() + "] : " + decrypted_message);
+                        }
+                        else
+                        {
+                            // Add message to received messages buffer
+                            receivedMessages.push_back("[" + getCurrentTime() + "] : " + bitsToString(binary_sequence));
+                        }
                     }
 
                     break; // Message received, go back to looking for a new message

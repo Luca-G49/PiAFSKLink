@@ -31,10 +31,12 @@ void setup_menu()
         std::cout << "| 6. Tone for start                               |\n";
         std::cout << "| 7. Tone for end                                 |\n";
         std::cout << "| 8. Tone end deadline                            |\n";
-        std::cout << "| 9. View current setup                           |\n";
-        std::cout << "| 10. Restore default setup                       |\n";
-        std::cout << "| 11. Delete received messages                    |\n";
-        std::cout << "| 12. Return to main menu                         |\n";
+        std::cout << "| 9. Enable message encryption                    |\n";
+        std::cout << "| 10. Encryption key                              |\n";
+        std::cout << "| 11. View current setup                          |\n";
+        std::cout << "| 12. Restore default setup                       |\n";
+        std::cout << "| 13. Delete received messages                    |\n";
+        std::cout << "| 14. Return to main menu                         |\n";
         std::cout << "+-------------------------------------------------+\n";
         std::cout << "> Enter your choice: ";
 
@@ -42,7 +44,7 @@ void setup_menu()
         std::cin >> choice;
 
         // Check for valid input
-        if (std::cin.fail() || choice < 1 || choice > 12)
+        if (std::cin.fail() || choice < 1 || choice > 14)
         {
             // Clear cin buffer, ignore and continue
             std::cin.clear();
@@ -232,6 +234,54 @@ void setup_menu()
 
         case 9:
         {
+            // Enable message encryption
+            bool inputEnableEncryption{};
+
+            std::cout << "Enable message encryption [0] [1]: ";
+            std::cin >> inputEnableEncryption;
+
+            if (!std::cin.fail())
+            {
+                config.enable_encryption = inputEnableEncryption;
+                std::cout << "\033[1;32mEnable message encryption set to \033[0m" << config.enable_encryption << std::endl;
+            }
+            else
+            {
+                std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
+            }
+
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            break;
+        }
+
+        case 10:
+        {
+            // Message encryption key
+            std::string inputEncryptionKey{};
+
+            std::cout << "Enter new message encryption key (32 bytes for AES-256): ";
+
+            // Clear any residual characters in the input buffer
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            
+            std::getline(std::cin, inputEncryptionKey);
+
+            if (!std::cin.fail() && (inputEncryptionKey.size() == 32))
+            {
+                config.encryption_key = inputEncryptionKey;
+                std::cout << "\033[1;32mMessage encryption key set to \033[0m" << config.encryption_key << std::endl;
+            }
+            else
+            {
+                std::cout << "\033[1;31mInvalid value, please try again.\033[0m\n";
+            }
+
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            break;
+        }
+
+        case 11:
+        {
             // View current setup
             std::cout << "\033[1;32mSample rate: \033[0m" << config.sample_rate << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mVolume: \033[0m" << config.volume << "\033[1;32m %\033[0m" << std::endl;
@@ -241,12 +291,14 @@ void setup_menu()
             std::cout << "\033[1;32mTone for start: \033[0m" << config.tone_start << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mTone for end: \033[0m" << config.tone_end << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mDeadline for tone end: \033[0m" << config.tone_end_deadline << "\033[1;32m s\033[0m" << std::endl;
+            std::cout << "\033[1;32mEnable message encryption: \033[0m" << config.enable_encryption << std::endl;
+            std::cout << "\033[1;32mMessage encryption key: \033[0m" << config.encryption_key << std::endl;
 
             std::this_thread::sleep_for(std::chrono::seconds(2));
             break;
         }
 
-        case 10:
+        case 12:
         {
             // Restore default setup
             std::cout << "Are you sure [Y] [N]" << std::endl;
@@ -263,7 +315,7 @@ void setup_menu()
             break;
         }
 
-        case 11:
+        case 13:
         {
             // Delete received messages
             std::cout << "Are you sure [Y] [N]" << std::endl;
@@ -272,7 +324,7 @@ void setup_menu()
 
             if (confirm == 'y' || confirm == 'Y')
             {
-                
+
                 std::cout << "\033[1;32mReceived messages deleted \033[0m" << std::endl;
                 std::this_thread::sleep_for(std::chrono::seconds(2));
             }
@@ -280,7 +332,7 @@ void setup_menu()
             break;
         }
 
-        case 12:
+        case 14:
         {
             menuExit = true;
             break;

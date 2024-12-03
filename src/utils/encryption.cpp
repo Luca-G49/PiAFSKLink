@@ -1,3 +1,6 @@
+// Copyright (c) 2024 Luca-G49
+// Distribuited under the MIT License. See the LICENSE file for more details.
+
 #include "logger.h"
 #include <string>
 #include <cstring>
@@ -5,7 +8,7 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
-// Function to generate a random IV (Initialization Vector)
+// Generates a random Initialization Vector (IV) for AES encryption.
 std::string generateIV() {
     unsigned char iv[16]; // 16 bytes for AES-256-CBC (128-bit IV)
     if (!RAND_bytes(iv, 16)) { // Generate random bytes
@@ -16,7 +19,7 @@ std::string generateIV() {
     return std::string(reinterpret_cast<char*>(iv), 16);
 }
 
-// Function to encrypt data using AES-256-CBC
+// Encrypts the provided plaintext using AES-256-CBC.
 int encrypt(const std::string& plaintext, const std::string& key, const std::string& iv, std::string& ciphertext) {
     
     if (key.size() != 32) {
@@ -74,7 +77,7 @@ int encrypt(const std::string& plaintext, const std::string& key, const std::str
     return 0;
 }
 
-// Function to decrypt data using AES-256-CBC
+// Decrypts the provided ciphertext using AES-256-CBC.
 int decrypt(const std::string& ciphertext, const std::string& key, const std::string& iv, std::string& plaintext) {
     
     if (key.size() != 32) {
@@ -131,7 +134,7 @@ int decrypt(const std::string& ciphertext, const std::string& key, const std::st
     return 0;
 }
 
-// Function to encrypt a message with a generated IV
+// Encrypts the provided plaintext, automatically generating an IV.
 int encrypt_message(const std::string& plaintext, const std::string& key, std::string& result) {
     std::string iv = generateIV(); // Generate a random IV
     if (iv.empty()) {
@@ -150,7 +153,7 @@ int encrypt_message(const std::string& plaintext, const std::string& key, std::s
     return 0;
 }
 
-// Function to decrypt a message that includes the IV
+// Decrypts the provided message that includes an IV.
 int decrypt_message(const std::string& ciphertext_with_iv, const std::string& key, std::string& result) {
 
     if (ciphertext_with_iv.size() < 16) {

@@ -1,3 +1,6 @@
+// Copyright (c) 2024 Luca-G49
+// Distribuited under the MIT License. See the LICENSE file for more details.
+
 #ifndef ENCRYPTION_H
 #define ENCRYPTION_H
 
@@ -6,19 +9,53 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
-// Function to generate a random IV (Initialization Vector)
+/**
+ * Generates a random Initialization Vector (IV) for AES encryption.
+ *
+ * @return A 16-byte IV as a string. Returns an empty string in case of an error.
+ */
 std::string generateIV();
 
-// Function to encrypt plaintext using AES-256-CBC
+/**
+ * Encrypts the provided plaintext using AES-256-CBC.
+ *
+ * @param plaintext The plaintext to encrypt.
+ * @param key The encryption key (32 bytes for AES-256).
+ * @param iv The Initialization Vector (16 bytes).
+ * @param ciphertext Reference to a string to store the encrypted ciphertext.
+ * @return 0 if successful, -1 if an error occurs.
+ */
 int encrypt(const std::string& plaintext, const std::string& key, const std::string& iv, std::string& ciphertext);
 
-// Function to decrypt ciphertext using AES-256-CBC
+/**
+ * Decrypts the provided ciphertext using AES-256-CBC.
+ *
+ * @param ciphertext The ciphertext to decrypt.
+ * @param key The decryption key (32 bytes for AES-256).
+ * @param iv The Initialization Vector (16 bytes).
+ * @param plaintext Reference to a string to store the decrypted plaintext.
+ * @return 0 if successful, -1 if an error occurs.
+ */
 int decrypt(const std::string& ciphertext, const std::string& key, const std::string& iv, std::string& plaintext);
 
-// Function to encrypt a message, including a randomly generated IV
+/**
+ * Encrypts the provided plaintext, automatically generating an IV.
+ *
+ * @param plaintext The plaintext to encrypt.
+ * @param key The encryption key (32 bytes for AES-256).
+ * @param result Reference to a string to store the concatenated IV and ciphertext.
+ * @return 0 if successful, -1 if an error occurs.
+ */
 int encrypt_message(const std::string& plaintext, const std::string& key, std::string& result);
 
-// Function to decrypt a message that includes the IV
+/**
+ * Decrypts the provided message that includes an IV.
+ *
+ * @param ciphertext_with_iv The concatenated IV and ciphertext to decrypt.
+ * @param key The decryption key (32 bytes for AES-256).
+ * @param result Reference to a string to store the decrypted plaintext.
+ * @return 0 if successful, -1 if an error occurs.
+ */
 int decrypt_message(const std::string& ciphertext_with_iv, const std::string& key, std::string& result);
 
 #endif // ENCRYPTION_H

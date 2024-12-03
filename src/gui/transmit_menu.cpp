@@ -54,6 +54,8 @@ void transmit_menu()
                         continue;
                     }
 
+                    Logger::getLogger()->info("Message successfully encrypted.");
+
                     // Convert the encrypted message into bit string and transmit
                     transmit(stringToBits(encrypted_message));
                 }

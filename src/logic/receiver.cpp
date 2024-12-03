@@ -138,6 +138,8 @@ void receiver_thread(std::atomic<bool> &running)
                                 Logger::getLogger()->error("Failed to decrypt the message.");
                                 break;
                             }
+
+                            Logger::getLogger()->info("Message successfully decrypted.");
                             
                             // Add decrypted message to received messages buffer
                             receivedMessages.push_back("[" + getCurrentTime() + "] : " + decrypted_message);

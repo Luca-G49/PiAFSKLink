@@ -6,4 +6,10 @@
 
 void setup_menu();
 
+void setup_audio_menu();
+
+void setup_tone_menu();
+
+void setup_encryption_menu();
+
 #endif

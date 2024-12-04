@@ -3,13 +3,13 @@
 ![Version](https://img.shields.io/github/v/release/LUCA-G49/PiAFSKLink?include_prereleases) ![Milestone Progress](https://img.shields.io/github/milestones/progress-percent/LUCA-G49/PiAFSKLink/1) ![Open Issues](https://img.shields.io/github/issues/LUCA-G49/PiAFSKLink) ![License](https://img.shields.io/github/license/Luca-G49/PiAFSKLink?label=License)
 
 
-**PiAFSKLink** is designed to transmitting and receiving AFSK (Audio Frequency Shift Keying) signals. It enables digital communication by modulating and demodulating audio signals.
+**PiAFSKLink** is designed for transmitting and receiving digital data modulating and demodulating AFSK (Audio Frequency Shift Keying) signals. It enables digital communication through a standard audio-trasmitting radio.
 
 The project has been developed and tested on a Raspberry Pi 4 with Raspbian OS but is designed to work on any Linux system that supports the required libraries. 
 
 ## How It Works
 
-PiAFSKLink works by encoding and decoding digital data as AFSK audio signals, enabling communication via radio frequencies. It provides two primary functionalities:
+PiAFSKLink works by encoding and decoding digital data as AFSK audio signals, enabling message communication via radio frequencies. It provides two primary functionalities:
 
 ### 1. **Transmission (AFSK Modulation)**
 
@@ -29,10 +29,10 @@ PiAFSKLink includes optional message encryption to enhance the security of trans
 
 1. **Encryption during Transmission**:
    - The message is encrypted with a 256-bit key using the AES-256-CBC algorithm.
-   - A randomly generated Initialization Vector (IV) is prepended to the encrypted message for secure decryption.
+   - A randomly generated Initialization Vector (IV) is prepended to the encrypted message.
 
 2. **Decryption during Reception**:
-   - The receiver extracts the IV from the incoming message.
+   - The receiver extracts the Initialization Vector (IV) from the incoming message.
    - The message is decrypted using the provided 256-bit key and the extracted IV.
 
 ## Requirements

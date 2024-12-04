@@ -35,6 +35,9 @@ PiAFSKLink includes optional message encryption to enhance the security of trans
    - The receiver extracts the Initialization Vector (IV) from the incoming message.
    - The message is decrypted using the provided 256-bit key and the extracted IV.
 
+> [!CAUTION]
+> For secure  encrypted trasmission change the default encryption_key in Setup menu.
+
 ## Requirements
 
 ### Hardware

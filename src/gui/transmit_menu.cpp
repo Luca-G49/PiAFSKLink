@@ -46,6 +46,9 @@ void transmit_menu()
                 // Get App configuration
                 Config::AppConfig &config = Config::get();
 
+                // Get the start time before transmission
+                auto start = std::chrono::steady_clock::now();
+
                 // Encrypt the message if encryption is enabled
                 if (config.enable_encryption)
                 {
@@ -69,7 +72,25 @@ void transmit_menu()
                     transmit(stringToBits(message));
                 }
 
-                std::cout << "\n\033[1;32mMessage sent: \033[0m" << message;
+                // Get the end time after transmission
+                auto end = std::chrono::steady_clock::now();
+
+                // Calculate the duration
+                std::chrono::duration<double> duration = end - start;
+
+                std::cout << "\n\033[1;32mMessage sent: \033[0m" << message
+                          << "\n\033[1;32mTransmission time: \033[0m"
+                          << std::fixed << std::setprecision(5) << duration.count() << " seconds";
+
+                if (config.enable_encryption)
+                {
+                    std::cout << "\n\033[1;32mStatus: \033[34mEncrypted\033[0m";
+                }
+                else
+                {
+                    std::cout << "\n\033[1;32mStatus: \033[31mNot Encrypted\033[0m";
+                }
+
                 std::cout << std::endl
                           << std::endl;
             }

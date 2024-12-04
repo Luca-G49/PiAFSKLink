@@ -142,12 +142,12 @@ void receiver_thread(std::atomic<bool> &running)
                             Logger::getLogger()->info("Message successfully decrypted.");
                             
                             // Add decrypted message to received messages buffer
-                            receivedMessages.push_back("[" + getCurrentTime() + "] : " + decrypted_message);
+                            receivedMessages.push_back("\033[1;32m[" + getCurrentTime() + "] \033[0m: " + decrypted_message);
                         }
                         else
                         {
                             // Add message to received messages buffer
-                            receivedMessages.push_back("[" + getCurrentTime() + "] : " + bitsToString(binary_sequence));
+                            receivedMessages.push_back("\033[1;32m[" + getCurrentTime() + "] \033[0m: " + bitsToString(binary_sequence));
                         }
                     }
 

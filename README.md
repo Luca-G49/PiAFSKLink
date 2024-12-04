@@ -36,7 +36,7 @@ PiAFSKLink includes optional message encryption to enhance the security of trans
    - The message is decrypted using the provided 256-bit key and the extracted IV.
 
 > [!CAUTION]
-> For secure  encrypted trasmission change the default encryption_key in Setup menu.
+> To ensure secure encrypted transmission, change the default encryption key in the Setup menu!
 
 ## Requirements
 

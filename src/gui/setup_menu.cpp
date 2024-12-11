@@ -414,16 +414,16 @@ void setup_tone_menu()
         case '4':
         {
             // Change tone for start
-            double inputToneBit1{};
+            double inputToneStart{};
 
             std::cout << std::endl << "Current tone for start is: " << config.tone_start << " Hz" << std::endl;
             std::cout << "Enter new tone for start (Hz): ";
-            std::cin >> inputToneBit1;
+            std::cin >> inputToneStart;
 
-            if (!std::cin.fail() && inputToneBit1 > 0)
+            if (!std::cin.fail() && inputToneStart > 0)
             {
-                config.tone_1 = inputToneBit1;
-                std::cout << "\033[1;32mTone for start set to \033[0m" << config.tone_1 << "\033[1;32m Hz\033[0m" << std::endl;
+                config.tone_start = inputToneStart;
+                std::cout << "\033[1;32mTone for start set to \033[0m" << config.tone_start << "\033[1;32m Hz\033[0m" << std::endl;
             }
             else
             {
@@ -439,16 +439,16 @@ void setup_tone_menu()
         case '5':
         {
             // Change tone for end
-            double inputToneBit1{};
+            double inputToneEnd{};
 
             std::cout << std::endl << "Current tone for end is: " << config.tone_end << " Hz" << std::endl;
             std::cout << "Enter new tone for end (Hz): ";
-            std::cin >> inputToneBit1;
+            std::cin >> inputToneEnd;
 
-            if (!std::cin.fail() && inputToneBit1 > 0)
+            if (!std::cin.fail() && inputToneEnd > 0)
             {
-                config.tone_1 = inputToneBit1;
-                std::cout << "\033[1;32mTone for end set to \033[0m" << config.tone_1 << "\033[1;32m Hz\033[0m" << std::endl;
+                config.tone_end = inputToneEnd;
+                std::cout << "\033[1;32mTone for end set to \033[0m" << config.tone_end << "\033[1;32m Hz\033[0m" << std::endl;
             }
             else
             {

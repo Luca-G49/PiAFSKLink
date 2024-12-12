@@ -62,6 +62,15 @@ void receiver_thread_sim(std::atomic<bool> &running)
 void receiver_thread(std::atomic<bool> &running)
 {
     AudioDevice audio;
+    auto start_time = std::chrono::steady_clock::now();
+    auto timeout_duration = std::chrono::seconds(config.tone_end_deadline); // Timeout for the current message
+    std::string binary_sequence;
+    bool start_detected = false;
+    bool separator_detected = false;
+
+    std::vector<short> captured_samples;
+    size_t samples_per_bit = config.sample_rate * (config.tone_bit_duration / 1e6);
+    size_t samples_to_capture = samples_per_bit / 2;
 
     // Initialize the audio device for capture
     if (!audio.init(config.sample_rate, true))
@@ -70,58 +79,54 @@ void receiver_thread(std::atomic<bool> &running)
         return;
     }
 
-    std::vector<short> captured_samples;
-    size_t samples_per_bit = config.sample_rate * (config.tone_duration / 1e6);
-
     while (running.load())
     {
-
         // Capture samples and check for the start tone
-        if (!audio.capture(captured_samples, samples_per_bit))
+        if (!audio.capture(captured_samples, samples_to_capture))
         {
             Logger::getLogger()->error("Audio capture failed! Receiver thread will terminate.");
             return;
         }
 
-        // Detect the start tone
-        if (detect_tone(captured_samples, config.sample_rate, config.tone_start))
+        if (!start_detected)
         {
-            Logger::getLogger()->info("Start tone detected! Decoding message...");
-
-            auto start_time = std::chrono::steady_clock::now();
-            auto timeout_duration = std::chrono::seconds(config.tone_end_deadline); // Timeout for the current message
-            std::string binary_sequence;
-
-            // Start decoding the bits
-            while (running.load())
+            // Detect the start tone
+            if (detect_tone(captured_samples, config.sample_rate, config.tone_start))
             {
-                if (!audio.capture(captured_samples, samples_per_bit))
+                Logger::getLogger()->info("Start tone detected! Decoding message...");
+                start_detected = true;
+                start_time = std::chrono::steady_clock::now();
+                binary_sequence.clear(); // Clear previous binary sequence
+            }
+        }
+        else
+        {
+            if (!separator_detected)
+            {
+                // Detect the separator tone
+                if (detect_tone(captured_samples, config.sample_rate, config.tone_separator))
                 {
-                    Logger::getLogger()->error("Failed to capture samples! Receiver thread will terminate.");
-                    return;
+                    separator_detected = true;
                 }
-
-                // Check if the samples are sufficient
-                if (captured_samples.size() < samples_per_bit)
-                {
-                    Logger::getLogger()->error("Insufficient captured samples! Receiver thread will terminate.");
-                    return;
-                }
-
+            }
+            else
+            {
                 // Detect bit tones
                 if (detect_tone(captured_samples, config.sample_rate, config.tone_0))
                 {
+                    separator_detected = false;
                     binary_sequence += "0";
                 }
                 else if (detect_tone(captured_samples, config.sample_rate, config.tone_1))
                 {
+                    separator_detected = false;
                     binary_sequence += "1";
                 }
-
                 // Detect the end tone
-                if (detect_tone(captured_samples, config.sample_rate, config.tone_end))
+                else if (detect_tone(captured_samples, config.sample_rate, config.tone_end))
                 {
-                    Logger::getLogger()->info("End tone detected! Transmission completed.");
+                    separator_detected = false;
+                    Logger::getLogger()->info("End tone detected! Transmission completed. " + binary_sequence);
 
                     // Insert the message into the buffer
                     {
@@ -140,7 +145,7 @@ void receiver_thread(std::atomic<bool> &running)
                             }
 
                             Logger::getLogger()->info("Message successfully decrypted.");
-                            
+
                             // Add decrypted message to received messages buffer
                             receivedMessages.push_back("\033[1;32m[" + getCurrentTime() + "] \033[0m: " + decrypted_message);
                         }
@@ -151,17 +156,16 @@ void receiver_thread(std::atomic<bool> &running)
                         }
                     }
 
-                    break; // Message received, go back to looking for a new message
-                }
-
-                // Check timeout
-                auto elapsed_time = std::chrono::steady_clock::now() - start_time;
-                if (elapsed_time > timeout_duration)
-                {
-                    Logger::getLogger()->error("Timeout! Stopping reception of current message.");
-                    break; // Exit decoding and look for a new message
+                    start_detected = false; // Message received, go back to looking for a new message
                 }
             }
+            // Check timeout
+            /*auto elapsed_time = std::chrono::steady_clock::now() - start_time;
+            if (elapsed_time > timeout_duration)
+            {
+                Logger::getLogger()->error("Timeout! Stopping reception of current message.");
+                start_detected = false; // Exit decoding and look for a new message
+            }*/
         }
     }
 

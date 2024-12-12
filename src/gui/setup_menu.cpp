@@ -77,7 +77,7 @@ void setup_menu()
             // View current setup
             std::cout << "\033[1;32mSample rate: \033[0m" << config.sample_rate << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mVolume: \033[0m" << config.volume << std::endl;
-            std::cout << "\033[1;32mTone duration: \033[0m" << config.tone_duration << "\033[1;32m us\033[0m" << std::endl;
+            std::cout << "\033[1;32mTone duration: \033[0m" << config.tone_bit_duration << "\033[1;32m us\033[0m" << std::endl;
             std::cout << "\033[1;32mTone for bit0: \033[0m" << config.tone_0 << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mTone for bit1: \033[0m" << config.tone_1 << "\033[1;32m Hz\033[0m" << std::endl;
             std::cout << "\033[1;32mTone for start: \033[0m" << config.tone_start << "\033[1;32m Hz\033[0m" << std::endl;
@@ -341,14 +341,14 @@ void setup_tone_menu()
             // Change tone duration
             int inputToneDuration{};
 
-            std::cout << std::endl << "Current tone_duration is: " << config.tone_duration << " us" << std::endl;
+            std::cout << std::endl << "Current tone_duration is: " << config.tone_bit_duration << " us" << std::endl;
             std::cout << "Enter new tone_duration (us): ";
             std::cin >> inputToneDuration;
 
             if (!std::cin.fail() && inputToneDuration > 0)
             {
-                config.tone_duration = inputToneDuration;
-                std::cout << "\033[1;32mTone duration set to \033[0m" << config.tone_duration << "\033[1;32m us\033[0m" << std::endl;
+                config.tone_bit_duration = inputToneDuration;
+                std::cout << "\033[1;32mTone duration set to \033[0m" << config.tone_bit_duration << "\033[1;32m us\033[0m" << std::endl;
             }
             else
             {
